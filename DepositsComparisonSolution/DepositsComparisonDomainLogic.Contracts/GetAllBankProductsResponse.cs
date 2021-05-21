@@ -5,6 +5,6 @@
 
     public class GetAllBankProductsResponse
     {
-        public IEnumerable<BankProduct> BankProducts { get; set; }
+        public IEnumerable<BankProductInfo> BankProducts { get; set; }
     }
 }

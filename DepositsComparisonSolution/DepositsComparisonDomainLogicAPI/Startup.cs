@@ -12,8 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace DepositsComparisonDomainLogic
+namespace DepositsComparisonDomainLogicAPI
 {
+    using Services.DataCollecting;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -29,8 +31,10 @@ namespace DepositsComparisonDomainLogic
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "DepositsComparisonDomainLogic", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "DepositsComparisonDomainLogicAPI", Version = "v1"});
             });
+            
+            services.AddTransient<IWebScraper, MoitePariScraper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +45,7 @@ namespace DepositsComparisonDomainLogic
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DepositsComparisonDomainLogic v1"));
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DepositsComparisonDomainLogicAPI v1"));
             }
 
             app.UseHttpsRedirection();

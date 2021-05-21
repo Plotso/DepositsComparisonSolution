@@ -1,6 +1,6 @@
 using System;
 
-namespace DepositsComparisonDomainLogic
+namespace DepositsComparisonDomainLogicAPI
 {
     public class WeatherForecast
     {

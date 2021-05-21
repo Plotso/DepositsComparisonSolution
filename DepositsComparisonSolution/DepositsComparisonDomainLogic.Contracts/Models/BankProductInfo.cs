@@ -1,6 +1,6 @@
 ﻿namespace DepositsComparisonDomainLogic.Contracts.Models
 {
-    public class BankProduct
+    public class BankProductInfo
     {
         public string Name { get; set; }
 

@@ -8,11 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{5AA7ABDA-AA1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsCreator", "DepositsCreator\DepositsCreator.csproj", "{7518C1EB-A945-422B-8C26-3B35D56CB052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparisonDomainLogic", "DepositsComparisonDomainLogic\DepositsComparisonDomainLogic.csproj", "{EEAF49D9-7BC7-456F-AB65-5FA07C1627BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparisonDomainLogicAPI", "DepositsComparisonDomainLogicAPI\DepositsComparisonDomainLogicAPI.csproj", "{EEAF49D9-7BC7-456F-AB65-5FA07C1627BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparer", "DepositsComparer\DepositsComparer.csproj", "{BB731BD0-EE30-46E1-B6A3-D98035567863}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparisonDomainLogic.Contracts", "DepositsComparisonDomainLogic.Contracts\DepositsComparisonDomainLogic.Contracts.csproj", "{895CC71F-08B0-41CB-948D-9E66F64221C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{47F7980E-4C0C-4942-B65B-D5047D906BA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparison.Data", "DepositsComparison.Data\DepositsComparison.Data.csproj", "{B0574C2A-4D46-4D10-8F7E-305BBC0CD284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +28,7 @@ Global
 		{EEAF49D9-7BC7-456F-AB65-5FA07C1627BB} = {1890EE92-B1B1-47D6-B9A6-AC107DE882BD}
 		{BB731BD0-EE30-46E1-B6A3-D98035567863} = {5AA7ABDA-AA1B-46C7-87A9-CFBE87DB7E94}
 		{895CC71F-08B0-41CB-948D-9E66F64221C1} = {1890EE92-B1B1-47D6-B9A6-AC107DE882BD}
+		{B0574C2A-4D46-4D10-8F7E-305BBC0CD284} = {47F7980E-4C0C-4942-B65B-D5047D906BA7}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7518C1EB-A945-422B-8C26-3B35D56CB052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,5 +47,9 @@ Global
 		{895CC71F-08B0-41CB-948D-9E66F64221C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{895CC71F-08B0-41CB-948D-9E66F64221C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{895CC71F-08B0-41CB-948D-9E66F64221C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0574C2A-4D46-4D10-8F7E-305BBC0CD284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0574C2A-4D46-4D10-8F7E-305BBC0CD284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0574C2A-4D46-4D10-8F7E-305BBC0CD284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0574C2A-4D46-4D10-8F7E-305BBC0CD284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

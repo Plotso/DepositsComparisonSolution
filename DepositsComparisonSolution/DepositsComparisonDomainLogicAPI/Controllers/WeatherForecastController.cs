@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-namespace DepositsComparisonDomainLogic.Controllers
+﻿namespace DepositsComparisonDomainLogicAPI.Controllers
 {
-    using Contracts;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+
+    using DepositsComparisonDomainLogic.Contracts;
 
     [ApiController]
     [Route("[controller]")]
