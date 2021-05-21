@@ -1,5 +1,6 @@
 namespace DepositsComparisonDomainLogicAPI
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -28,13 +29,13 @@ namespace DepositsComparisonDomainLogicAPI
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "DepositsComparisonDomainLogicAPI", Version = "v1"});
             });
             
-            //ToDo: Register auto mapper and mappings
+            services.AddAutoMapper(typeof(Startup));
+            
             services.AddTransient<IWebScraper, MoitePariScraper>();
             services.AddTransient<IBankProductsService, BankProductsService>();
             services.AddTransient<IBankService, BankService>();
             services.AddTransient<IDepositsService, DepositsService>();
             services.AddTransient<IInterestService, InterestService>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

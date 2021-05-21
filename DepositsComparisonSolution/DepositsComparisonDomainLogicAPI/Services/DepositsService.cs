@@ -13,11 +13,13 @@
     {
         private readonly IDeletableEntityRepository<Deposit> _depositsRepository;
         private readonly IMapper _mapper;
+        private readonly IBankService _bankService;
 
-        public DepositsService(IDeletableEntityRepository<Deposit> depositsRepository, IMapper mapper)
+        public DepositsService(IDeletableEntityRepository<Deposit> depositsRepository, IMapper mapper, IBankService bankService)
         {
             _depositsRepository = depositsRepository;
             _mapper = mapper;
+            _bankService = bankService;
         }
         
         public IEnumerable<T> GetAll<T>()
@@ -26,13 +28,13 @@
             return allEntities.Select(e => _mapper.Map<T>(e));
         }
 
-        public T GetById<T>(int id)
+        public T GetById<T>(string id)
         {
             var deposit = _depositsRepository.All().FirstOrDefault(c => c.Id == id);
             return _mapper.Map<T>(deposit);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var deposit = _depositsRepository.All().FirstOrDefault(c => c.Id == id);
             if (deposit != null)
@@ -42,10 +44,15 @@
             }
         }
 
-        public Task CreateAsync(DepositCreateInputModel inputModel)
+        public async Task<string> CreateAsync(DepositCreateInputModel inputModel)
         {
-            var deposit = _mapper.Map<Deposit>(inputModel); //ToDo: Ensure this mapping is created
-            throw new System.NotImplementedException();
+            var deposit = _mapper.Map<Deposit>(inputModel);
+            deposit.BankId = inputModel.BankId;
+
+            await _depositsRepository.AddAsync(deposit);
+            await _depositsRepository.SaveChangesAsync();
+
+            return deposit.Id;
         }
     }
 }

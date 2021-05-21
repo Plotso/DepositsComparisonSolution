@@ -5,6 +5,6 @@
 
     public interface IDepositsService : IDbEntityService
     {
-        Task CreateAsync(DepositCreateInputModel inputModel);
+        Task<string> CreateAsync(DepositCreateInputModel inputModel);
     }
 }

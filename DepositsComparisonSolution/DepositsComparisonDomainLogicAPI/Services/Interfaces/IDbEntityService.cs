@@ -7,8 +7,8 @@
     {
         IEnumerable<T> GetAll<T>();
         
-        T GetById<T>(int id);
+        T GetById<T>(string id);
         
-        Task DeleteAsync(int id);
+        Task DeleteAsync(string id);
     }
 }

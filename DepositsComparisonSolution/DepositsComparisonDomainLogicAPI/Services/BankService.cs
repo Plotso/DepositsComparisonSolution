@@ -25,13 +25,13 @@
             return allEntities.Select(e => _mapper.Map<T>(e));
         }
 
-        public T GetById<T>(int id)
+        public T GetById<T>(string id)
         {
             var bank = _banksRepository.All().FirstOrDefault(c => c.Id == id);
             return _mapper.Map<T>(bank);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var bank = _banksRepository.All().FirstOrDefault(c => c.Id == id);
             if (bank != null)
@@ -46,6 +46,12 @@
             var bank = new Bank {Name = bankName};
             await _banksRepository.AddAsync(bank);
             await _banksRepository.SaveChangesAsync();
+        }
+
+        public string GetBankIdByName(string bankName)
+        {
+            var bank = _banksRepository.All().FirstOrDefault(c => c.Name == bankName);
+            return bank.Name;
         }
     }
 }

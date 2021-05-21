@@ -26,13 +26,13 @@
             return allEntities.Select(e => _mapper.Map<T>(e));
         }
 
-        public T GetById<T>(int id)
+        public T GetById<T>(string id)
         {
             var bankProduct = _bankProductsRepository.All().FirstOrDefault(c => c.Id == id);
             return _mapper.Map<T>(bankProduct);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var bankProduct = _bankProductsRepository.All().FirstOrDefault(c => c.Id == id);
             if (bankProduct != null)

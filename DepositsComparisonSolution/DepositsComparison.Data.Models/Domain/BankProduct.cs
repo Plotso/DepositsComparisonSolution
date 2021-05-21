@@ -3,7 +3,7 @@
     using Asbtract;
     using Public;
 
-    public class BankProduct : BaseDeletableModel<int>
+    public class BankProduct : BaseDeletableModel<string>
     {
         public string Name { get; set; }
 

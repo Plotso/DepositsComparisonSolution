@@ -5,6 +5,6 @@
 
     public interface IInterestService: IDbEntityService
     {
-        Task CreateAsync(int months, decimal percentage, InterestType type);
+        Task CreateAsync(int months, decimal percentage, InterestType type, string depositId);
     }
 }

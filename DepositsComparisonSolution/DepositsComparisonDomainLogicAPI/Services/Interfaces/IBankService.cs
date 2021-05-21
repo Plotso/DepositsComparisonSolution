@@ -6,5 +6,7 @@
     public interface IBankService : IDbEntityService
     {
         Task CreateAsync(string bankName);
+
+        string GetBankIdByName(string bankName);
     }
 }
