@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 
 namespace DepositsComparisonDomainLogic.Controllers
 {
+    using Contracts;
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -34,6 +36,14 @@ namespace DepositsComparisonDomainLogic.Controllers
                     Summary = Summaries[rng.Next(Summaries.Length)]
                 })
                 .ToArray();
+        }
+        
+        
+
+        [HttpGet]
+        public GetAllBankProductsResponse GetAllBankProducts(GetAllBankProductsRequest request)
+        {
+            return new GetAllBankProductsResponse();
         }
     }
 }
