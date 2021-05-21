@@ -1,8 +1,9 @@
 namespace DepositsComparisonDomainLogicAPI
 {
-    using AutoMapper;
+    using DepositsComparison.Data;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -23,6 +24,12 @@ namespace DepositsComparisonDomainLogicAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddDbContext<ApplicationDbContext>(options =>
+                    options
+                        .UseLazyLoadingProxies()
+                        .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -41,6 +48,16 @@ namespace DepositsComparisonDomainLogicAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            /* ToDo:
+            // Seed data on application startup
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
+            */
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
