@@ -6,4 +6,8 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DepositsComparisonDomainLogic.Contracts\DepositsComparisonDomainLogic.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

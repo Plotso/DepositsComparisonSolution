@@ -37,8 +37,6 @@ namespace DepositsComparisonDomainLogic.Controllers
                 })
                 .ToArray();
         }
-        
-        
 
         [HttpGet]
         public GetAllBankProductsResponse GetAllBankProducts(GetAllBankProductsRequest request)
