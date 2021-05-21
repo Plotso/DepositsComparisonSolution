@@ -1,8 +1,9 @@
-﻿namespace DepositsComparisonDomainLogic.Contracts.Models.Deposits
+﻿namespace DepositsComparison.Data.Models.Domain
 {
-    using DepositsComparison.Data.Public;
+    using Asbtract;
+    using Public;
 
-    public class InterestInfo
+    public class Interest : BaseDeletableModel<int>
     {
         public int Months { get; set; }
         

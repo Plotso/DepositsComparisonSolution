@@ -1,4 +1,4 @@
-﻿namespace DepositsComparisonDomainLogic.Contracts.Models.Deposits
+﻿namespace DepositsComparison.Data.Public
 {
     public enum Currency
     {

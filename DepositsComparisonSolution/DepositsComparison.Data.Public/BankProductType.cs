@@ -1,4 +1,4 @@
-﻿namespace DepositsComparisonDomainLogic.Contracts.Models
+﻿namespace DepositsComparison.Data.Public
 {
     public enum BankProductType
     {

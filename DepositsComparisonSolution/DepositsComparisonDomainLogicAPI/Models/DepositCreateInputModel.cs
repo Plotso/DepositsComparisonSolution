@@ -1,12 +1,15 @@
-﻿namespace DepositsComparisonDomainLogic.Contracts.Models.Deposits
+﻿namespace DepositsComparisonDomainLogicAPI.Models
 {
     using DepositsComparison.Data.Public;
+    using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
 
-    public class DepositInfo
+    //ToDo: Map to DepositInfo object
+    public class DepositCreateInputModel
     {
+        
         public string Name { get; set; }
         
-        public BankInfo Bank { get; set; }
+        public int BankId { get; set; }
 
         public decimal MinAmount { get; set; }
 
@@ -14,7 +17,8 @@
         
         public string InterestDetails { get; set; }
         
-        public InterestInfo[] InterestOptions { get; set; }
+        // TOdo: Decide about deposits
+        //public InterestInfo[] InterestOptions { get; set; }
         
         public string InterestPaymentInfo { get; set; }
 

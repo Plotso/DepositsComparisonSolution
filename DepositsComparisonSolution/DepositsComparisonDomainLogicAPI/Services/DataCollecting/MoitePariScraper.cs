@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using AngleSharp;
     using AngleSharp.Dom;
+    using DepositsComparison.Data.Public;
     using DepositsComparisonDomainLogic.Contracts.Models;
     using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
     using Models.DataCollecting;
