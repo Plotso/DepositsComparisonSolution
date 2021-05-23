@@ -1,6 +1,7 @@
 ﻿namespace DepositsComparisonDomainLogicAPI.Services
 {
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
@@ -46,6 +47,15 @@
 
         public async Task<string> CreateAsync(DepositCreateInputModel inputModel)
         {
+            if (inputModel.MinAmount < 0.00m)
+            {
+                throw new InvalidDataException("The minimal amount for the deposit cannot be negative");
+            }
+            if (inputModel.MaxAmount.HasValue && inputModel.MaxAmount.Value < 0.00m)
+            {
+                throw new InvalidDataException("The max amount for the deposit cannot be negative");
+            }
+            
             var deposit = _mapper.Map<Deposit>(inputModel);
             deposit.BankId = inputModel.BankId;
 

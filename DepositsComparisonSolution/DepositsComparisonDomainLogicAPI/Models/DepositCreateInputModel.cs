@@ -11,7 +11,7 @@
 
         public decimal MinAmount { get; set; }
 
-        public decimal MaxAmount { get; set; }
+        public decimal? MaxAmount { get; set; }
         
         public string InterestDetails { get; set; }
         

@@ -5,6 +5,11 @@
 
     public class GetDepositsResult
     {
+        public GetDepositsResult()
+        {
+            Deposits = new List<DepositInfo>();
+        }
+        
         public string SourceURL { get; set; }
         
         public IList<DepositInfo> Deposits { get; set; }

@@ -16,6 +16,7 @@
             CreateMap<BankProduct, BankProductInfo>().ReverseMap();
             CreateMap<Deposit, DepositInfo>().ReverseMap();
             CreateMap<Bank, BankInfo>().ReverseMap();
+            CreateMap<Interest, InterestInfo>().ReverseMap();
         }
     }
 }

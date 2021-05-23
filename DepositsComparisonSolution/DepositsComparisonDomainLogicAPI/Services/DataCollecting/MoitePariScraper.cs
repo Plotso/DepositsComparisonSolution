@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using AngleSharp;
     using AngleSharp.Dom;
+    using DepositsComparison.Data.Models.Domain;
     using DepositsComparison.Data.Public;
     using DepositsComparisonDomainLogic.Contracts.Models;
     using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
@@ -89,15 +91,18 @@
                     .Replace("<br />", Environment.NewLine)
                     .Replace("<br/>", Environment.NewLine);
 
+                var interests = GetInterests(interestDetails);
+
                 var interestPaymentInfoSection = offerData[4];
                 var interestPaymentInfo = interestPaymentInfoSection.Children.First(c => c.ClassName == "inner-cnt").TextContent.Trim();;
 
                 deposits.Add(new DepositInfo
                 {
                     Name = depositName,
-                    Bank = new BankInfo { Name = bankName},  //ToDo: Add logic to create bank if not existing
+                    Bank = new BankInfo { Name = bankName},
                     MinAmount = decimal.Parse(minAmount),
                     InterestDetails = interestDetails,
+                    InterestOptions = interests,
                     InterestPaymentInfo = interestPaymentInfo,
                     Currency = GetCurrencyFromProductName(depositName)
                 });
@@ -120,6 +125,169 @@
             
             var bankLinkElement = bankNameDiv.Children.First(n => n.NodeType == NodeType.Element);
             return bankLinkElement.InnerHtml.Trim();
+        }
+
+        private IList<InterestInfo> GetInterests(string interestDetails)
+        {
+            var result = new List<InterestInfo>();
+            var interests = interestDetails.Replace(NonBreakingSpaceUTF8, "");
+
+            if (interests.Contains("едномесечен"))
+            {
+                var options = interests.Split("\r");
+                var months = 1;
+                foreach (var interestOption in options)
+                {
+                    if (interestOption == "\n")
+                    {
+                        continue;
+                    }
+                    var multiplier = GetMonthsMultiplier(interestOption);
+                    var percentage = GetPercentage(interestOption);
+                    result.Add(new InterestInfo
+                    {
+                        Months = months * multiplier,
+                        Percentage = percentage
+                    });
+                }
+            }
+            else if (interests.Contains("тримесечен"))
+            {
+                var options = interests.Split("\r");
+                var months = 3;
+                foreach (var interestOption in options)
+                {
+                    if (interestOption == "\n")
+                    {
+                        continue;
+                    }
+                    var multiplier = GetMonthsMultiplier(interestOption);
+                    var percentage = GetPercentage(interestOption);
+                    result.Add(new InterestInfo
+                    {
+                        Months = months * multiplier,
+                        Percentage = percentage
+                    });
+                }
+            }
+            else if (interests.Contains("месец") || interests.Contains("месеца"))
+            {
+                var options = interests.Split("\r");
+                foreach (var interestOption in options)
+                {
+                    if (interestOption.Contains("%") && 
+                        (interestOption.Contains("месец") || interestOption.Contains("месеца")))
+                    {
+                        var months = GetMonthsFromNormalString(interestOption);
+                        var percentage = GetPercentage(interestOption);
+                        result.Add(new InterestInfo
+                        {
+                            Months = months,
+                            Percentage = percentage
+                        });
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private int GetMonthsFromNormalString(string interestOption)
+        {
+            var index = interestOption.Contains("месеца")? interestOption.IndexOf("месеца") : interestOption.IndexOf("месец");
+            var substringContainingMonthNumber = interestOption.Substring(0, index);
+            var indexOfFirstNumber = -1;
+
+            for (int i = 0; i < substringContainingMonthNumber.Length; i++)
+            {
+                if (char.IsNumber(substringContainingMonthNumber[i]))
+                {
+                    indexOfFirstNumber = i;
+                    break;
+                }
+            }
+
+            var number = $"{substringContainingMonthNumber[indexOfFirstNumber].ToString()}";
+            if (indexOfFirstNumber != -1 && indexOfFirstNumber != (substringContainingMonthNumber.Length - 1))
+            {
+                var isNextCharADigit = char.IsNumber(substringContainingMonthNumber[indexOfFirstNumber + 1]);
+                if (isNextCharADigit)
+                {
+                    number += $"{substringContainingMonthNumber[indexOfFirstNumber + 1].ToString()}";
+                }
+            }
+            return int.Parse(number);
+        }
+
+        private decimal GetPercentage(string interestOption)
+        {
+            var regexPattern = @"\d\.\d.+%|\d\,\d.+%";
+            var result = Regex.Match(interestOption, regexPattern);
+            var firstDigitIndex = result.Value.StartsWith('0') ? result.Value.IndexOf('0') : result.Value.IndexOf('1');
+            try
+            {
+                var number = result.Value.Substring(firstDigitIndex, 4);
+                if (number.Contains(','))
+                {
+                    number = number.Replace(',', '.');
+                }
+                return decimal.Parse(number);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        private int GetMonthsMultiplier(string interestOption)
+        {
+            if (interestOption.Contains("1-ви") || interestOption.Contains("първи"))
+            {
+                return 1;
+            }
+            else if (interestOption.Contains("2-ри") || interestOption.Contains("втори"))
+            {
+                return 2;
+            }
+            else if (interestOption.Contains("3-ти") || interestOption.Contains("трети"))
+            {
+                return 3;
+            }
+            else if (interestOption.Contains("4-ти") || interestOption.Contains("четвърти"))
+            {
+                return 4;
+            }
+            else if (interestOption.Contains("5-ти") || interestOption.Contains("пети"))
+            {
+                return 5;
+            }
+            else if (interestOption.Contains("6-ти") || interestOption.Contains("шести"))
+            {
+                return 6;
+            }
+            else if (interestOption.Contains("7-ми") || interestOption.Contains("седми"))
+            {
+                return 7;
+            }
+            else if (interestOption.Contains("8-ми") || interestOption.Contains("осми"))
+            {
+                return 8;
+            }
+            else if (interestOption.Contains("9-ти") || interestOption.Contains("девети"))
+            {
+                return 9;
+            }
+            else if (interestOption.Contains("10-ти") || interestOption.Contains("десети"))
+            {
+                return 10;
+            }
+            else if (interestOption.Contains("11-ти") || interestOption.Contains("единадесети"))
+            {
+                return 11;
+            }
+            
+            return 12;
         }
 
         private Currency GetCurrencyFromProductName(string productName)

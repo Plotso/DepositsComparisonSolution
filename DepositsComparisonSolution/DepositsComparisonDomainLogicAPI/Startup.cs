@@ -1,6 +1,8 @@
 namespace DepositsComparisonDomainLogicAPI
 {
+    using Data;
     using DepositsComparison.Data;
+    using DepositsComparison.Data.Repositories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
@@ -36,6 +38,9 @@ namespace DepositsComparisonDomainLogicAPI
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "DepositsComparisonDomainLogicAPI", Version = "v1"});
             });
             
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            
             services.AddAutoMapper(typeof(Startup));
             
             services.AddTransient<IWebScraper, MoitePariScraper>();
@@ -48,15 +53,13 @@ namespace DepositsComparisonDomainLogicAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            /* ToDo:
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new DataGenerator().GenerateDataAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
-            */
             
             if (env.IsDevelopment())
             {

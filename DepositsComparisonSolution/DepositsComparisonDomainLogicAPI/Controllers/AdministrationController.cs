@@ -56,7 +56,7 @@
             var createDepositInput = _mapper.Map<DepositCreateInputModel>(request.Deposit);
             createDepositInput.BankId = bankId;
             
-            var depositId = await _depositsService.CreateAsync(createDepositInput);
+            var depositId = await _depositsService.CreateAsync(createDepositInput); // ToDo: Handle potential exception
             if (string.IsNullOrEmpty(depositId))
             {
                 _logger.LogError($"DepositId cannot be null or empty");
