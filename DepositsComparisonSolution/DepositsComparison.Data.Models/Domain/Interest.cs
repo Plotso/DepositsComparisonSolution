@@ -8,7 +8,7 @@
     {
         public int Months { get; set; }
 
-        [Range(0.00, 1.00)]
+        [Range(0.00, 100.00)]
         public decimal Percentage { get; set; }
 
         public InterestType Type { get; set; }

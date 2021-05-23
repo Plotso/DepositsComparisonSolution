@@ -56,8 +56,13 @@
                 var interests = new List<Interest>();
                 foreach (var depositInfo in getDepositsResult.Deposits)
                 {
-                    var depositInterests = depositInfo.InterestOptions.Select(i => mapper.Map<Interest>(i));
-                    interests.AddRange(depositInterests);
+                    var deposit = mapper.Map<Deposit>(depositInfo);
+                    foreach (var interestOption in depositInfo.InterestOptions)
+                    {
+                        var interest = mapper.Map<Interest>(interestOption);
+                        interest.Deposit = deposit;
+                        interests.Add(interest);
+                    }
                 }
 
                 await interestsDbSeeder.SeedAsync(dbContext, interests);

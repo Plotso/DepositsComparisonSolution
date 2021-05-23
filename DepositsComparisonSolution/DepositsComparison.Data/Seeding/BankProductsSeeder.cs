@@ -1,5 +1,6 @@
 ﻿namespace DepositsComparison.Data.Seeding
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,8 +14,13 @@
             {
                 return;
             }
+            
+            foreach (var bankProduct in bankProducts)
+            {
+                bankProduct.Id = Guid.NewGuid().ToString();
+                await dbContext.BankProducts.AddAsync(bankProduct);
+            }
 
-            await dbContext.BankProducts.AddRangeAsync(bankProducts);
             await dbContext.SaveChangesAsync();
         }
     }

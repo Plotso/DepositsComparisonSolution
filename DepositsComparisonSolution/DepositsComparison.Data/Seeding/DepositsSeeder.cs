@@ -1,8 +1,10 @@
 ﻿namespace DepositsComparison.Data.Seeding
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
     using Models.Domain;
 
     public class DepositsSeeder
@@ -16,9 +18,18 @@
 
             foreach (var deposit in deposits)
             {
-                var bank = dbContext.Banks.FirstOrDefault(b => b.Name == deposit.Bank.Name);
-                deposit.BankId = bank.Id;
+                var bank = await dbContext.Banks.FirstOrDefaultAsync(b => b.Name == deposit.Bank.Name);
 
+                if (bank == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Cannot create interest because there is no bank with name {deposit.Bank.Name} inside database");
+                }
+                deposit.BankId = bank.Id;
+                deposit.Bank = bank;
+                deposit.InterestOptions = new List<Interest>();
+
+                deposit.Id = Guid.NewGuid().ToString();
                 await dbContext.Deposits.AddAsync(deposit);
             }
 
