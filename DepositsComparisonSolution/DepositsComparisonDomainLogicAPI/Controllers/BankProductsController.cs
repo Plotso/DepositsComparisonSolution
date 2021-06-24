@@ -19,7 +19,7 @@
             _bankProductsService = bankProductsService;
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetBankProducts))]
         public GetAllBankProductsResponse GetBankProducts()
         {
             var bankProducts = _bankProductsService.GetAll<BankProductInfo>();
