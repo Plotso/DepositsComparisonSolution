@@ -93,6 +93,7 @@
                 
                 VerticalAlignment="Bottom"
 
-                HorizontalAlignment="center"> Add new deposit </Button>
+                HorizontalAlignment="center"
+                Click="CloseButton_Click"> Add new deposit </Button>
     </StackPanel>
 </Window>
