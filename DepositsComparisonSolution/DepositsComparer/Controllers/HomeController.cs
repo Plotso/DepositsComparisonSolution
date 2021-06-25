@@ -9,13 +9,17 @@ using DepositsComparer.Models;
 
 namespace DepositsComparer.Controllers
 {
+    using Services;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IDepositsComparisonAPIConsumer _apiConsumer;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IDepositsComparisonAPIConsumer apiConsumer)
         {
             _logger = logger;
+            _apiConsumer = apiConsumer;
         }
 
         public IActionResult Index()

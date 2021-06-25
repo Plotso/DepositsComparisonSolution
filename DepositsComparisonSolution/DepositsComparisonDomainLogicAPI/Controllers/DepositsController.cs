@@ -19,7 +19,7 @@
             _depositsService = depositsService;
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAllDeposits))]
         public GetAllDepositsResponsе GetAllDeposits()
         {
             var deposits = _depositsService.GetAll<DepositInfo>();
