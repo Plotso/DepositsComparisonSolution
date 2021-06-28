@@ -29,7 +29,7 @@
             _interestService = interestService;
         }
 
-        [HttpPost]
+        [HttpPost(nameof(CreateDeposit))]
         public async Task<CreateDepositResponse> CreateDeposit(CreateDepositRequest request)
         {
             if (!IsDepositInfoValid(request.Deposit))

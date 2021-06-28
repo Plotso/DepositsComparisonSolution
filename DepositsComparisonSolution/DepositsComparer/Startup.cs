@@ -1,10 +1,13 @@
 namespace DepositsComparer
 {
+    using Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Services;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -20,6 +23,10 @@ namespace DepositsComparer
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddControllersWithViews();
+
+            services.Configure<APIConsumerSettings>(Configuration.GetSection(nameof(APIConsumerSettings)));
+            
+            services.AddSingleton<IDepositsComparisonAPIConsumer, DepositsComparisonAPIConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
