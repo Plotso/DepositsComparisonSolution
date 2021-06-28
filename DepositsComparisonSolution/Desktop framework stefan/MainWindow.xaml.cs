@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using RestSharp;
 
 namespace Desktop_framework_stefan
 {
@@ -83,8 +84,10 @@ namespace Desktop_framework_stefan
                     MessageBox.Show("Ama ti lud li si s tiq granici?");
                 }
             }
-            
-            
+
+        //    var client = new RestClient("https://localhost:5001/Administration/CreateDeposit");
+
+        //    var request = new CreateDepositRequest();
         }
     }
 
