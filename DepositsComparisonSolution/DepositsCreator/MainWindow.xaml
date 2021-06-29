@@ -5,25 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DepositsCreator"
         mc:Ignorable="d"
-         Title="Deposit creator" Height="450" Width="525"
+        Title="Deposit creator" Height="450" Width="525"
         Icon="https://cdn.icon-icons.com/icons2/2104/PNG/512/bank_icon_129525.png">
     <StackPanel Margin="10">
-        
+
         <StackPanel.Resources>
-            <local:Banks x:Key="myBanks"/>
-            <local:Currencies x:Key="myCurrencies"/>
-            <local:Terms x:Key="myTerms"/>
-            <local:Interests x:Key="myInterests"/>
+            <local:Banks x:Key="myBanks" />
+            <local:Currencies x:Key="myCurrencies" />
+            <local:Terms x:Key="myTerms" />
+            <local:Interests x:Key="myInterests" />
         </StackPanel.Resources>
-        
-        <Label Target="{Binding ElementName=txtName}">
+
+        <Label Target="{Binding ElementName=DeposiTxtName}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_green.png" />
                 <AccessText Text="_Name:" />
             </StackPanel>
         </Label>
-        <TextBox Name="txtName" />
-        
+        <TextBox Name="DeposiTxtName" />
+
         <Label Target="{Binding ElementName=txtMinValue}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_green.png" />
@@ -31,7 +31,7 @@
             </StackPanel>
         </Label>
         <TextBox Name="txtMinValue" />
-        
+
         <Label Target="{Binding ElementName=txtMaxValue}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_green.png" />
@@ -39,61 +39,63 @@
             </StackPanel>
         </Label>
         <TextBox Name="txtMaxValue" />
-       
-        
+
+
         <Label Target="{Binding ElementName=txtBank}">
             <StackPanel Orientation="Horizontal">
-              <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_blue.png" />
-              <AccessText Text="_Bank:" />
+                <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_blue.png" />
+                <AccessText Text="_Bank:" />
             </StackPanel>
         </Label>
-        <ComboBox Name="comboBox1"
+        <ComboBox Name="BankComboBox"
                   ItemsSource="{StaticResource myBanks}"
                   Text="My Banks"
                   IsEditable="true"
-                  IsReadOnly="true"/>
-        
+                  IsReadOnly="true" />
+
         <Label Target="{Binding ElementName=txtCurrency}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_blue.png" />
                 <AccessText Text="_Currency:" />
             </StackPanel>
         </Label>
-        <ComboBox Name="comboBox2"
+        <ComboBox Name="CurencyComboBox"
                   ItemsSource="{StaticResource myCurrencies}"
                   Text="Currencies"
                   IsEditable="true"
-                  IsReadOnly="true"/>
-        
+                  IsReadOnly="true" />
+
         <Label Target="{Binding ElementName=txtTerms}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_blue.png" />
                 <AccessText Text="_Terms:" />
             </StackPanel>
         </Label>
-        <ComboBox Name="comboBox3"
+        <ComboBox Name="TermsComboBox"
                   ItemsSource="{StaticResource myTerms}"
                   Text="Terms"
                   IsEditable="true"
-                  IsReadOnly="true"/>
-        
+                  IsReadOnly="true" />
+
         <Label Target="{Binding ElementName=txtInterests}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_blue.png" />
                 <AccessText Text="_Interests:" />
             </StackPanel>
         </Label>
-        <ComboBox Name="comboBox4"
+        <ComboBox Name="percentageComboBox"
                   ItemsSource="{StaticResource myInterests}"
                   Text="Interests"
                   IsEditable="true"
-                  IsReadOnly="true"/>
-        
-        <Button x:Name="DrawCircleButton" Height="20" Width="120" Margin="10" 
-                
+                  IsReadOnly="true" />
+
+        <Button x:Name="SeedButton" Height="20" Width="120" Margin="10"
+
                 VerticalAlignment="Bottom"
 
                 HorizontalAlignment="center"
-                Click="CloseButton_Click"> Add new deposit </Button>
+                Click="SeedButton_Click">
+            Add new deposit
+        </Button>
     </StackPanel>
 </Window>

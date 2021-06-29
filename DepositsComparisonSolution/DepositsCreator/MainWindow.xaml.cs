@@ -35,11 +35,11 @@ namespace DepositsCreator
             InitializeComponent();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void SeedButton_Click(object sender, RoutedEventArgs e)
         {
             bool isMaxOk = false;
             bool isMinOk = false;
-            
+
             bool IsDigitsOnly(string str)
             {
                 int minus_count = 0;
@@ -57,37 +57,40 @@ namespace DepositsCreator
             if (string.IsNullOrWhiteSpace(txtMinValue.Text))
             {
                 txtMinValue.Focus();
-                txtMinValue.Text = "ne moje prazen string be deeba";
+                txtMinValue.Text = "Няма въведена стойност!";
             }
             else if (IsDigitsOnly(txtMinValue.Text).Equals(false))
             {
                 txtMinValue.Focus();
-                txtMinValue.Text = "Ama kvi sa tiq bukvi tuka be";
+                txtMinValue.Text = "Стойността трябва да е число!";
             }
             else if (int.Parse(txtMinValue.Text) < 1)
             {
                 txtMinValue.Focus();
-                txtMinValue.Text = "kak otricatelno be ludak";
+                txtMinValue.Text = "Стойността трябва да е положителна!";
             }
             else
             {
                 isMinOk = true;
             }
-            
+
             if (string.IsNullOrWhiteSpace(txtMaxValue.Text))
             {
                 txtMaxValue.Focus();
-                txtMaxValue.Text = "ne moje prazen string be deeba";
+                txtMaxValue.Text = "Няма въведена стойност!";
             }
             else if (IsDigitsOnly(txtMaxValue.Text).Equals(false))
             {
                 txtMaxValue.Focus();
-                txtMaxValue.Text = "Ama kvi sa tiq bukvi tuka be";
+                txtMaxValue.Text = "Стойността трябва да е число!";
             }
+
+            //TODO add check if the number is negative
+
             else if (int.Parse(txtMaxValue.Text) > 100000)
             {
                 txtMaxValue.Focus();
-                txtMaxValue.Text = "kva e taq stoinost ei";
+                txtMaxValue.Text = "Стойността не може да надвишава 100 000!";
             }
             else
             {
@@ -98,7 +101,7 @@ namespace DepositsCreator
             {
                 if (int.Parse(txtMaxValue.Text) < int.Parse(txtMinValue.Text))
                 {
-                    MessageBox.Show("Ama ti lud li si s tiq granici?");
+                    MessageBox.Show("Максималната въведена стойност е по-ниска от минималната!");
                 }
             }
 
@@ -106,27 +109,27 @@ namespace DepositsCreator
 
             var requestModel = new CreateDepositRequest
             {
-                Deposit =  new DepositInfo
+                Deposit = new DepositInfo
                 {
                     Bank = new BankInfo
                     {
-                        Name = comboBox1.Text 
+                        Name = BankComboBox.Text
                     },
-                    Currency = (Currency)Enum.Parse(typeof(Currency), comboBox2.Text),
+                    Currency = (Currency) Enum.Parse(typeof(Currency), CurencyComboBox.Text),
                     InterestDetails = string.Empty,
                     InterestOptions = new List<InterestInfo>
                     {
                         new InterestInfo
                         {
-                            Months = int.Parse(comboBox3.Text),
-                            Percentage = decimal.Parse(comboBox4.Text),
+                            Months = int.Parse(TermsComboBox.Text),
+                            Percentage = decimal.Parse(percentageComboBox.Text),
                             Type = InterestType.Fixed
                         }
                     },
                     InterestPaymentInfo = String.Empty,
                     MaxAmount = decimal.Parse(txtMaxValue.Text),
                     MinAmount = decimal.Parse(txtMinValue.Text),
-                    Name = txtName.Text
+                    Name = DeposiTxtName.Text
                 }
             };
 
@@ -135,7 +138,6 @@ namespace DepositsCreator
             request.AddJsonBody(requestModel);
 
             var response = client.Execute<CreateDepositResponse>(request);
-
         }
     }
 
@@ -195,6 +197,5 @@ namespace DepositsCreator
             Add("30");
             Add("36");
         }
-    
     }
 }
