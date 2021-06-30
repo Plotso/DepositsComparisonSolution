@@ -1,37 +1,49 @@
-﻿@using DepositsComparisonDomainLogic.Contracts
-@using DepositsComparisonDomainLogic.Contracts.Models.Deposits
+﻿@using DepositsComparisonDomainLogic.Contracts.Models.Deposits
 <body class="vw-100 vh-100 overflow-auto" id="emp">
+    <div>
+        <p>Подреди по: </p>
+        <ul class="list-group-horizontal offset-xl-7">
+            <li>
+                <a asp-area="" asp-controller="Deposit" asp-action="AllOrderByType">Tип на депозита</a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Deposit" asp-action="AllOrderByPaymentType">Начин на плащане</a>
+            </li>
+        </ul>
+        <hr />
+    </div>
+    @*<div><span class="radio-asp focused"><input id="MainContent_searchView_ctl04_rbStdDeposit" type="radio" name="ctl00$MainContent$searchView$ctl04$depositpurpose" value="rbStdDeposit" checked="checked"><label for="MainContent_searchView_ctl04_rbStdDeposit">Стандартен срочен депозит</label></span></div>*@
     <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
         <thead class="thead-dark">
             <tr>
-                <th>#bank</th>
-                <th>Name</th>
-                <th>min</th>
-                <th>max</th>
-                <th>i</th>
-                <th></th>
-                <th></th>
+                <th>Банка</th>
+                <th>Вид</th>
+                <th>Минимален</th>
+                <th>Максимален</th>
+                <th>Плащане</th>
+                @*<th style="width:30%">Детайли</th>
+                    <th></th>
+                    <th></th>*@
             </tr>
         </thead>
         <tbody>
             @foreach (DepositInfo deposit in Model)
             {
                 <tr>
-                    <th scope="row">e</th>
+                    <th scope="row">@deposit.Bank.Name</th>
                     <td>@deposit.Name</td>
                     <td>@deposit.MinAmount</td>
-                    <td>@deposit.MaxAmount</td>
-                    <td>@deposit.InterestPaymentInfo.Length</td>
-                    @*<td asp-action="Add" asp-controller="Home" asp-route-id="@deposit" class="btn-dark">Add</td>
-                <td asp-action="Remove" asp-controller="Home" asp-route-id="@deposit" class="btn-dark">Remove</td>*@
+                    <td>@deposit.MaxAmount -</td>
+                    <td>@deposit.InterestPaymentInfo.ToString()</td>
+                    @*<td>@deposit.InterestDetails.ToString()</td>
+                        <td asp-action="Remove" asp-controller="Deposit" asp-route-id="@deposit.id" class="btn-dark">Remove</td>*@
                 </tr>
             }
         </tbody>
     </table>
-
-    @*<div class="text-center">
-        <div class="">
-            <a asp-area="" asp-controller="Home" asp-action="Create" class="buttonCreate">Create</a>
+    <div class="text-center">
+            <div>
+                <a asp-area="" asp-controller="Deposit" asp-action="Create" class="buttonCreate">Create</a>
+            </div>
         </div>
-    </div>*@
 </body>

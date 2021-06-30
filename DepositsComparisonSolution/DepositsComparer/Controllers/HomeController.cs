@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DepositsComparer.Models;
 using DepositsComparer.Services;
+using DepositsComparisonDomainLogic.Contracts.Models;
 using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
+using System.Threading.Tasks;
 
 namespace DepositsComparer.Controllers
 {
@@ -21,16 +23,36 @@ namespace DepositsComparer.Controllers
             _apiConsumer = apiConsumer;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var depositResponce = await _apiConsumer.GetAllDeposits();
+            //var bankResponce = await _apiConsumer.GetAllBankProductsAsync();
+            return View(depositResponce);
         }
+
+        //public async Task<IActionResult> Comparer(string name)
+        //{
+        //    // If there are more bank products - fix it.
+        //    var getAllDepositResponse = new List<DepositInfo>() { };
+        //    foreach (var product in _apiConsumer.GetAllDeposits().Result.Deposits)
+        //    {
+        //        if (product.Name.ToLower() == name.ToLower())
+        //        {
+        //            getAllDepositResponse.Add(product);
+        //        }
+        //    }
+        //    return View(getAllDepositResponse);
+        //}
 
         public IActionResult Privacy()
         {
             return View();
         }
 
+        public IActionResult PageNotFound()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

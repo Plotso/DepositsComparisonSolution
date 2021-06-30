@@ -1,5 +1,4 @@
-﻿@*@model DepositsComparer.Services.DepositsComparisonAPIConsumer*@
-
+﻿@using DepositsComparisonDomainLogic.Contracts;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -26,7 +25,33 @@
         <div class="container">
         </div>
     </header>
-
+    @*<table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
+        <thead class="thead-dark">
+            <tr>
+                <th>#bank</th>
+                <th>Name</th>
+                <th>min</th>
+                <th>max</th>
+                <th>i</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var deposit in Model)
+            {
+                <tr>
+                    <th scope="row">e</th>
+                    <td>@deposit.Name</td>
+                    <td>@deposit.MinAmount</td>
+                    <td>@deposit.MaxAmount</td>
+                    <td>@deposit.InterestPaymentInfo.Length</td>
+                    <td asp-action="Add" asp-controller="Home" asp-route-id="@deposit" class="btn-dark">Add</td>
+                        <td asp-action="Remove" asp-controller="Home" asp-route-id="@deposit" class="btn-dark">Remove</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
     <!-- Portfolio Grid-->
     <section class="page-section bg-light" id="portfolio">
         <div class="ring-container">
@@ -47,8 +72,11 @@
                             <img class="img-fluid" src="https://www.ally.com/do-it-right/images/2015/10/key-to-banking-and-deposits-400x300.jpg" alt="" />
                         </a>
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Депозити и сметки</div>
-                            <div class="portfolio-caption-subheading text-muted">Сравни оферти</div>
+                            @{string typeOfBankProduct = "Депозити и сметки"; }
+                            <div class="portfolio-caption-heading">@typeOfBankProduct</div>
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct ">
+                                <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -62,7 +90,8 @@
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Ипотечни кредити</div>
-                            <div class="portfolio-caption-subheading text-muted">Сравни оферти</div>
+                            <a asp-action="Home" asp-controller="Comparer" asp-route-id="Ипотечни кредити" class="btn"><i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти</a>
+                            @*<a class="rounded btn" asp-area="" asp-controller="Home" asp-action="Comparer" asp-route-id="Ипотечни кредити"></a>*@
                         </div>
                     </div>
                 </div>
@@ -132,7 +161,8 @@
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Новини и съвети</h2>
                 <h3 class="section-subheading text-muted">
-                    Обновено на: <script>document.write(new Date().toLocaleDateString());</script>
+                    Обновено на:
+                    <script>document.write(new Date().toLocaleDateString());</script>
                 </h3>
             </div>
             <div class="row text-center">
@@ -204,7 +234,7 @@
             </form>
         </div>
     </section>
-   
+
     <!-- Portfolio Modals-->
     <!-- Modal 1-->
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -223,20 +253,20 @@
 
                                     Депозитите обикновено са основният източник на финансиране за банките.
                                 </p>
-                                    <ul class="list-inline offset-xl-7">
-                                        <li>
-                                            <a asp-area="" asp-controller="Deposit" asp-action="All">Депозити</a>
-                                        </li>
-                                        <li>
-                                            <a asp-area="" asp-controller="Deposit" asp-action="SavingAccounts">Спестовни сметки</a>
-                                        </li>
-                                        <li>
-                                            <a asp-area="" asp-controller="Deposit" asp-action="MobileBanking">Мобилно банкиране</a>
-                                        </li>
-                                        <li>
-                                            <a asp-area="" asp-controller="Deposit" asp-action="Fonds">Взаимни фондове</a>
-                                        </li>
-                                    </ul>
+                                <ul class="list-inline offset-xl-7">
+                                    <li>
+                                        <a asp-area="" asp-controller="Deposit" asp-action="All">Каталог депозити</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Deposit" asp-action="SavingAccounts">Спестовни сметки</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Deposit" asp-action="MobileBanking">Мобилно банкиране</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Deposit" asp-action="Fonds">Взаимни фондове</a>
+                                    </li>
+                                </ul>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times mr-1"></i>
                                     Затвори
