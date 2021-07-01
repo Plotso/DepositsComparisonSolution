@@ -13,6 +13,8 @@ An [API](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) responsibl
 | Banks          | Provides information about currently existing Banks | GetAllBanks
 | Deposits       | Provides information about currently existing Deposits | GetAllDeposits , GetFilteredDeposits
 
+> **Note**: The API request should be sent to address that's with the following format:  {apiUrl}/{controllerName}/{endpointName} 
+
 The API is the only application that has direct access to the database.
 
 Initial information in the database is seeded from [Moitepari.bg](https://www.moitepari.bg).
