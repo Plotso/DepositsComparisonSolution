@@ -22,9 +22,8 @@ namespace DepositsComparer.Controllers
             _apiConsumer = apiConsumer;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var depositsResponse = await _apiConsumer.GetAllDeposits();
             return View();
         }
 
