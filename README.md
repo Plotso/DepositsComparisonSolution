@@ -4,7 +4,7 @@ Project for New Bulgarian University built using kind of microservices architect
 The idea of the project is to provide a solution for listing and comparing bank products. The comparing functionality is limited to Deposits only. **The project is structured into 3 main components:**
 
 ## DepositsComparisonDomainLogicAPI
-An [API](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) responsible for all the domain logic. It has 4 main controllers providing endpoints for different functionalities. 
+An [API](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) responsible for all the domain logic. It has 4 main controllers providing endpoints for different functionalities. 
 
 |   Controller   | Functionality | Endpoints
 | ---------------| --------------| -------
@@ -20,23 +20,23 @@ Initial information in the database is seeded from [Moitepari.bg](https://www.mo
 **Technologies and libraries** : ASP.NET 5, Entity Framework 5 (Core), AngelSharp, AutoMapper
 
 ## DepositsComparer
-A [MVC web application](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparer) responsible for visualisation of bank products, deposits and all other components to the users. It gives the customer the opportunity to check all products & deposits, to filter the deposits based on his preferences and to get a payment plan for a given deposit.
+A [MVC web application](DepositsComparisonSolution/DepositsComparer) responsible for visualisation of bank products, deposits and all other components to the users. It gives the customer the opportunity to check all products & deposits, to filter the deposits based on his preferences and to get a payment plan for a given deposit.
 
 The web application is consuming data from the API. Due the the fact that the project by acceptance criteria is supposed to be operated/administrated from the desktop application, *the MVC web application doesn't contain any user management logic - login, register, roles and etc*
 
 **Technologies and libraries** : ASP.NET 5, RestSharp
 
 ## DepositsCreator
-A [WPF desktop application](DepositsComparisonSolution/DepositsComparisonSolution/DepositsCreator) responsible for the creation of new deposits and banks. It validates user input and send a request to the API in order to create the new entry. Project uses basic MVVM pattern.
+A [WPF desktop application](DepositsComparisonSolution/DepositsCreator) responsible for the creation of new deposits and banks. It validates user input and send a request to the API in order to create the new entry. Project uses basic MVVM pattern.
 
 **Technologies and libraries** : .NET 5, RestSharp
 
 ## Other projects inside solution
 
-*  **[DepositsComparison.Data](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparison.Data)** - main project for database modifications and work. Contains configuration, repositories, seeding logic and the db context
-* **[DepositsComparison.Data.Models](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparison.Data.Models)** - contains models used for the database entities. This project is used only by internal application (Data project and the API).
-* **[DepositsComparison.Data.Public](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparison.Data.Public)** - contains public models used by all the application - API, Web, Desktop
-* **[DepositsComparisonDomainLogic.Contracts](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogic.Contracts)** - contains the contracts and public models required for communicating with the API
+*  **[DepositsComparison.Data](DepositsComparisonSolution/DepositsComparison.Data)** - main project for database modifications and work. Contains configuration, repositories, seeding logic and the db context
+* **[DepositsComparison.Data.Models](DepositsComparisonSolution/DepositsComparison.Data.Models)** - contains models used for the database entities. This project is used only by internal application (Data project and the API).
+* **[DepositsComparison.Data.Public](DepositsComparisonSolution/DepositsComparison.Data.Public)** - contains public models used by all the application - API, Web, Desktop
+* **[DepositsComparisonDomainLogic.Contracts](DepositsComparisonSolution/DepositsComparisonDomainLogic.Contracts)** - contains the contracts and public models required for communicating with the API
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -52,14 +52,14 @@ It's good to have the following software products installed in order to be sure 
 
 ### Installation
 
-If you want to have **custom database name**, go to [appsettings.json](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogicAPI/appsettings.json) file in API project and change **_THAT__** to whatever name you would like:
+If you want to have **custom database name**, go to [appsettings.json](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI/appsettings.json) file in API project and change **_THAT__** to whatever name you would like:
 ```
 "ConnectionStrings": {
     "DefaultConnection": "Server=.;Database=THAT_;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
 ```
 
-Before initially running the project, go to [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) folder (the one containing PersonalWebsite.csproj file) and execute the following commands:
+Before initially running the project, go to [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) folder (the one containing PersonalWebsite.csproj file) and execute the following commands:
 
 ```
 dotnet ef migrations add initialCreate
@@ -69,7 +69,7 @@ dotnet ef database update
 ```
 Those commands are required in order for the project to correctly build the database before running it.
 
-> **Note** - There might be a problem here since the DB project [DepositsComparison.Data](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparison.Data) is a separate project from the [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogicAPI). **In such case, follow the steps below**:
+> **Note** - There might be a problem here since the DB project [DepositsComparison.Data](DepositsComparisonSolution/DepositsComparison.Data) is a separate project from the [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI). **In such case, follow the steps below**:
 > * In VisualStudio, set startup project to DepositsComparisonDomainLogicAPI
 > * Open Package Manager Console (type it in the search bar and it will show)
 > * Change the **"Default project:"** to Data\DepositsComparison.Data  ![PackageManagerConsole](DepositsComparisonSolution/docs/PackageManagerConsoleConfiguration.PNG)
@@ -83,17 +83,17 @@ Those commands are required in order for the project to correctly build the data
 In order to run the project, all the prerequisites from above should be prepared and also the installation process should be followed.
 The project heavily depends on the API, so it's good to start with it, it's also responsible for building the database. 
 There are 2 options:
-1) Run projects 1 by 1, starting with [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) and then the web project ([DepositsComparer]((DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparer))) and/or the desktop application ([DepositsCreator](DepositsComparisonSolution/DepositsComparisonSolution/DepositsCreator))
+1) Run projects 1 by 1, starting with [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) and then the web project ([DepositsComparer]((DepositsComparisonSolution/DepositsComparer))) and/or the desktop application ([DepositsCreator](DepositsComparisonSolution/DepositsCreator))
 2) Run multiple projects at oonce - just make sure the API is included in those projects
 
 > **Note** - The web and desktop applications are searching the API on a configurable address, so you have to be sure that it's properly configured. Here is example for localhost:
-> * In **launchSettings.json** file (located in Properties folder, not published to Git) inside the [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) you can check on which ports does the API work. By default should be 5000/5001 in case it's being run via .NET/Core.
-> * In the same file but in the [DepositsComparer](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparer) change the port to which the MVC web application runs. This will **prevent the 2 applications from occupying the same port**
-> * In the [appsettings.json](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparer/appsettings.json) file inside the MVC web project there is a configuration called **APIConsumerSettings** and inside it is the URL to which the web applications searches for the API. *For the desktop application the value is currently hardcoded.*
+> * In **launchSettings.json** file (located in Properties folder, not published to Git) inside the [DepositsComparisonDomainLogicAPI](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) you can check on which ports does the API work. By default should be 5000/5001 in case it's being run via .NET/Core.
+> * In the same file but in the [DepositsComparer](DepositsComparisonSolution/DepositsComparer) change the port to which the MVC web application runs. This will **prevent the 2 applications from occupying the same port**
+> * In the [appsettings.json](DepositsComparisonSolution/DepositsComparer/appsettings.json) file inside the MVC web project there is a configuration called **APIConsumerSettings** and inside it is the URL to which the web applications searches for the API. *For the desktop application the value is currently hardcoded.*
 
 ## Business configurations
 
-The API address, the configurations can be updated dynamically and it will affect the [DepositsComparer](DepositsComparisonSolution/DepositsComparisonSolution/DepositsComparer) web project
+The API address, the configurations can be updated dynamically and it will affect the [DepositsComparer](DepositsComparisonSolution/DepositsComparer) web project
 
 ```js
 "APIConsumerSettings": {
