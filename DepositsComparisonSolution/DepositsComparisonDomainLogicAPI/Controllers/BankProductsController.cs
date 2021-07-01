@@ -19,8 +19,8 @@
             _bankProductsService = bankProductsService;
         }
 
-        [HttpGet(nameof(GetBankProducts))]
-        public GetAllBankProductsResponse GetBankProducts()
+        [HttpGet(nameof(GetAllBankProducts))]
+        public GetAllBankProductsResponse GetAllBankProducts()
         {
             var bankProducts = _bankProductsService.GetAll<BankProductInfo>();
             
