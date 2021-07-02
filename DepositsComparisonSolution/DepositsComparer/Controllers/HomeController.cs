@@ -26,24 +26,8 @@ namespace DepositsComparer.Controllers
         public async Task<IActionResult> Index()
         {
             var depositResponce = await _apiConsumer.GetAllDeposits();
-            //var bankResponce = await _apiConsumer.GetAllBankProductsAsync();
             return View(depositResponce);
         }
-
-        //public async Task<IActionResult> Comparer(string name)
-        //{
-        //    // If there are more bank products - fix it.
-        //    var getAllDepositResponse = new List<DepositInfo>() { };
-        //    foreach (var product in _apiConsumer.GetAllDeposits().Result.Deposits)
-        //    {
-        //        if (product.Name.ToLower() == name.ToLower())
-        //        {
-        //            getAllDepositResponse.Add(product);
-        //        }
-        //    }
-        //    return View(getAllDepositResponse);
-        //}
-
         public IActionResult Privacy()
         {
             return View();

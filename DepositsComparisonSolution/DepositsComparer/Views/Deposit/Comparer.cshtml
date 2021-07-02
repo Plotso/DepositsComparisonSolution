@@ -1,10 +1,10 @@
-﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.GetAllDepositsResponsе>
+﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfo>
 <body>
     <h1>
         Потребителски кредит намерете най-добрата оферта
     </h1>
     <p>
-        Сравнете <strong>@Model.Count(x => x.Deposits.Any()) оферти</strong> от <strong> банки</strong>
+        Сравнете <strong>@Model.Select(x => x.Name).Count() оферти</strong> от <strong>@Model.GroupBy(x => x.Bank.Name).Count() банки</strong>
     </p>
     <div class="top-search-form">
         <div class="form-row clearfix">

@@ -2,8 +2,6 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -25,34 +23,6 @@
         <div class="container">
         </div>
     </header>
-    @*<table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
-        <thead class="thead-dark">
-            <tr>
-                <th>#bank</th>
-                <th>Name</th>
-                <th>min</th>
-                <th>max</th>
-                <th>i</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var deposit in Model)
-            {
-                <tr>
-                    <th scope="row">e</th>
-                    <td>@deposit.Name</td>
-                    <td>@deposit.MinAmount</td>
-                    <td>@deposit.MaxAmount</td>
-                    <td>@deposit.InterestPaymentInfo.Length</td>
-                    <td asp-action="Add" asp-controller="Home" asp-route-id="@deposit" class="btn-dark">Add</td>
-                        <td asp-action="Remove" asp-controller="Home" asp-route-id="@deposit" class="btn-dark">Remove</td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
-    <!-- Portfolio Grid-->
     <section class="page-section bg-light" id="portfolio">
         <div class="ring-container">
             <div class="ringring"></div>
@@ -74,7 +44,7 @@
                         <div class="portfolio-caption">
                             @{string typeOfBankProduct = "Депозити и сметки"; }
                             <div class="portfolio-caption-heading">@typeOfBankProduct</div>
-                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct ">
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct">
                                 <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
                             </a>
                         </div>
@@ -89,9 +59,11 @@
                             <img class="img-fluid" src="https://s3.amazonaws.com/remprod/app/public/ckeditor_assets/pictures/9/content_tax_benefits_of_homeownership.jpg" alt="" />
                         </a>
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Ипотечни кредити</div>
-                            <a asp-action="Home" asp-controller="Comparer" asp-route-id="Ипотечни кредити" class="btn"><i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти</a>
-                            @*<a class="rounded btn" asp-area="" asp-controller="Home" asp-action="Comparer" asp-route-id="Ипотечни кредити"></a>*@
+                            @{typeOfBankProduct = "Ипотечни кредити"; }
+                            <div class="portfolio-caption-heading">@typeOfBankProduct</div>
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct">
+                                <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -104,8 +76,11 @@
                             <img class="img-fluid" src="https://img.etimg.com/thumb/width-400,height-300,msid-79207440,imgsize-441397/wealth/borrow/can-a-personal-loan-help-you-tide-over-a-financial-crisis.jpg" alt="" />
                         </a>
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Потребителски кредити</div>
-                            <div class="portfolio-caption-subheading text-muted">Сравни оферти</div>
+                            @{typeOfBankProduct = "Потребителски кредити"; }
+                            <div class="portfolio-caption-heading">@typeOfBankProduct</div>
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct">
+                                <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -118,22 +93,28 @@
                             <img class="img-fluid" src="https://img.etimg.com/thumb/width-400,height-300,msid-83638082,imgsize-1762924/india-tops-global-market-in-number-of-finance-app-installs-appsflyer.jpg" alt="" />
                         </a>
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Бързи кредити</div>
-                            <div class="portfolio-caption-subheading text-muted">Сравни оферти</div>
+                            @{typeOfBankProduct = "Бързи кредити"; }
+                            <div class="portfolio-caption-heading">@typeOfBankProduct</div>
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct">
+                                <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
                     <div class="portfolio-item">
-                        <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
+                        <a class="portfolio-link" data-toggle="modal" href="">
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <img class="img-fluid" src="https://northshoreadvisory.com/wp-content/uploads/2018/08/biz-Management-400x300.png" alt="" />
                         </a>
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Бизнес кредити</div>
-                            <div class="portfolio-caption-subheading text-muted">Сравни оферти</div>
+                            @{typeOfBankProduct = "Бизнес кредити";}
+                            <div class="portfolio-caption-heading">@typeOfBankProduct</div>
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct">
+                                <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -146,8 +127,11 @@
                             <img class="img-fluid" src="https://sr-management.bg/wp-content/uploads/2020/05/foreign-investment-400x300.jpg" alt="" />
                         </a>
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Инвестиции</div>
-                            <div class="portfolio-caption-subheading text-muted">Сравни оферти</div>
+                            @{typeOfBankProduct = "Инвестиции"; }
+                            <div class="portfolio-caption-heading">@typeOfBankProduct</div>
+                            <a class="rounded btn" asp-area="" asp-controller="Deposit" asp-action="Comparer" asp-route-id="@typeOfBankProduct">
+                                <i class="fas fa-info-circle" style="color: darkorange"></i>Сравни оферти
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -253,7 +237,7 @@
 
                                     Депозитите обикновено са основният източник на финансиране за банките.
                                 </p>
-                                <ul class="list-inline offset-xl-7">
+                                <ul class="list-inline">
                                     <li>
                                         <a asp-area="" asp-controller="Deposit" asp-action="All">Каталог депозити</a>
                                     </li>

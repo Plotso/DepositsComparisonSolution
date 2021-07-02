@@ -1,8 +1,11 @@
 ﻿@using DepositsComparisonDomainLogic.Contracts.Models.Deposits
-<body class="vw-100 vh-100 overflow-auto" id="emp">
+<body class="vw-100 vh-100 overflow-auto">
     <div>
         <p>Подреди по: </p>
-        <ul class="list-group-horizontal offset-xl-7">
+        <ul class="list-group-horizontal">
+            <li>
+                <a asp-area="" asp-controller="Deposit" asp-action="All">Дата на издаване</a>
+            </li>
             <li>
                 <a asp-area="" asp-controller="Deposit" asp-action="AllOrderByType">Tип на депозита</a>
             </li>
@@ -12,18 +15,31 @@
         </ul>
         <hr />
     </div>
-    @*<div><span class="radio-asp focused"><input id="MainContent_searchView_ctl04_rbStdDeposit" type="radio" name="ctl00$MainContent$searchView$ctl04$depositpurpose" value="rbStdDeposit" checked="checked"><label for="MainContent_searchView_ctl04_rbStdDeposit">Стандартен срочен депозит</label></span></div>*@
+
+    <div>
+        <p>Валута: </p>
+        <ul class="list-group-horizontal">
+            <li>
+                <a asp-controller="Deposit" asp-action="Currency" asp-route-Id="BGN" class="btn">Български лев</a>
+            </li>
+            <li>
+                <a asp-controller="Deposit" asp-action="Currency" asp-route-Id="EUR" class="btn">Евро</a>
+            </li>
+            <li>
+                <a asp-controller="Deposit" asp-action="Currency" asp-route-Id="USD" class="btn">Долар</a>
+            </li>
+        </ul>
+        <hr />
+    </div>
+
     <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
         <thead class="thead-dark">
             <tr>
                 <th>Банка</th>
                 <th>Вид</th>
                 <th>Минимален</th>
-                <th>Максимален</th>
                 <th>Плащане</th>
-                @*<th style="width:30%">Детайли</th>
-                    <th></th>
-                    <th></th>*@
+                @*<th>Лихва</th>*@
             </tr>
         </thead>
         <tbody>
@@ -31,19 +47,23 @@
             {
                 <tr>
                     <th scope="row">@deposit.Bank.Name</th>
-                    <td>@deposit.Name</td>
+                    <td>
+                        @deposit.Name
+                    </td>
                     <td>@deposit.MinAmount</td>
-                    <td>@deposit.MaxAmount -</td>
-                    <td>@deposit.InterestPaymentInfo.ToString()</td>
-                    @*<td>@deposit.InterestDetails.ToString()</td>
-                        <td asp-action="Remove" asp-controller="Deposit" asp-route-id="@deposit.id" class="btn-dark">Remove</td>*@
+                    <td>@deposit.InterestPaymentInfo</td>
+                    @*<td class="tooltip">
+                        <p>виж още</p>
+                            <span class="tooltiptext" id="@deposit.InterestDetails">@deposit.InterestDetails</span>
+                    </td>*@
+                </tr>
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Deposit" asp-route-Id="@deposit.Name" class="btn">
+                        <i class="fas fa-info-circle" style="color: darkorange"></i>Информация</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="text-center">
-            <div>
-                <a asp-area="" asp-controller="Deposit" asp-action="Create" class="buttonCreate">Create</a>
-            </div>
-        </div>
 </body>
