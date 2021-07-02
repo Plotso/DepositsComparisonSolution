@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfo>
 <body>
-    <h1>
-        Потребителски кредит намерете най-добрата оферта
-    </h1>
+    <hr><h1 class="section-heading text-uppercase text-center">Депозит</h1>
+    <h2 class="section-heading text-uppercase text-center">Намерете най-добрата оферта</h2><hr />
     <p>
         Сравнете <strong>@Model.Select(x => x.Name).Count() оферти</strong> от <strong>@Model.GroupBy(x => x.Bank.Name).Count() банки</strong>
     </p>
@@ -13,68 +12,35 @@
                 <label> Размер на кредита</label>
 
                 <div class="input-num-wrapper buttons_added focused">
-                    <input type="button" value="" class="minus">
                     <input name="" type="number" id="" min="" max="" mystep="1000" value="10000" class="input-text qty">
-
-                    <input type="button" value="" class="plus">
                 </div>
             </div>
-            <!-- /.input-holder -->
 
             <div class="input-holder">
                 <label>Валута</label>
 
 
                 <div class="selecter  closed" tabindex="0">
-                    <select name="ctl00$MainContent$searchView$ctl04$lstCurrency" id="MainContent_searchView_ctl04_lstCurrency" class="selecter-main selecter-element" tabindex="-1">
-                        <option selected="selected" value="2">BGN</option>
-                        <option value="4">EUR</option>
-
-                    </select><span class="selecter-selected">BGN</span><div class="selecter-options"><span class="selecter-item selected" data-value="2">BGN</span><span class="selecter-item" data-value="4">EUR</span></div>
+                    <select tabindex="-1">
+                        <option>BGN</option>
+                        <option>EUR</option>
+                    </select>
                 </div>
             </div>
-            <!-- /.input-holder -->
-        </div>
-        <!-- /.form-row -->
-
+        </div><p></p>
         <div class="form-row clearfix">
-
             <div class="input-holder">
                 <label> Срок на кредита</label>
 
                 <div class="selecter  closed" tabindex="0">
-                    <select name="" id="" class="selecter-main selecter-element" data-selecter-options="{label:Изберете}" tabindex="-1">
-                        <option value="6">6 месеца</option>
-                        <option value="12">1 години</option>
-                        <option value="24">2 години</option>
-                        <option value="36">3 години</option>
+                    <select name="" id="" class="selecter-main selecter-element" tabindex="-1">
                         <option value="48">4 години</option>
-                        <option selected="selected" value="60">5 години</option>
+                        <option value="48">4 години</option>
+                        <option value="60">5 години</option>
                         <option value="72">6 години</option>
-                        <option value="84">7 години</option>
-                        <option value="96">8 години</option>
-                        <option value="108">9 години</option>
-                        <option value="120">10 години</option>
-                        <option value="132">11 години</option>
-                        <option value="144">12 години</option>
-
-                    </select><span class="selecter-selected">5 години</span><div class="selecter-options"><span class="selecter-item" data-value="6">6 месеца</span><span class="selecter-item" data-value="12">1 години</span><span class="selecter-item" data-value="24">2 години</span><span class="selecter-item" data-value="36">3 години</span><span class="selecter-item" data-value="48">4 години</span><span class="selecter-item selected" data-value="60">5 години</span><span class="selecter-item" data-value="72">6 години</span><span class="selecter-item" data-value="84">7 години</span><span class="selecter-item" data-value="96">8 години</span><span class="selecter-item" data-value="108">9 години</span><span class="selecter-item" data-value="120">10 години</span><span class="selecter-item" data-value="132">11 години</span><span class="selecter-item" data-value="144">12 години</span></div>
-                </div>
-
-            </div>
-            <!-- /.input-holder -->
-            <div class="input-holder">
-                <label for="MainContent_searchView_ctl04_tbNetIncome">Нетен доход</label>
-
-                <div class="input-num-wrapper buttons_added">
-                    <input type="button" value="" class="minus">
-                    <input name="" type="number" id="" min="100" max="5000" mystep="100" value="1000" class="input-text qty">
-
-                    <input type="button" value="" class="plus">
+                    </select>
                 </div>
             </div>
-            <!-- /.input-holder -->
-        </div>
-        <!-- /.form-row -->
+        </div><hr />
     </div>
 </body>
