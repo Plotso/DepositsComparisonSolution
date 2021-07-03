@@ -4,6 +4,7 @@
     using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using Models;
     using Services.Interfaces;
 
     [ApiController]
@@ -25,6 +26,25 @@
             var deposits = _depositsService.GetAll<DepositInfo>();
             
             return new GetAllDepositsResponsе
+            {
+                Deposits = deposits
+            };
+        }
+
+        [HttpGet(nameof(GetFilteredDeposits))]
+        public GetFilteredDepositsResponse GetFilteredDeposits(GetFilteredDepositsRequest request)
+        {
+            var filterDefinition = new DepositsFilterDefinition
+            {
+                Amount = request.Amount,
+                Currency = request.Currency,
+                InterestType = request.InterestType,
+                PeriodInMonths = request.PeriodInMonths
+            };
+            
+            var deposits = _depositsService.GetFiltered<DepositInfo>(filterDefinition);
+            
+            return new GetFilteredDepositsResponse
             {
                 Deposits = deposits
             };

@@ -29,6 +29,18 @@
             return allEntities.Select(e => _mapper.Map<T>(e));
         }
 
+        public IEnumerable<T> GetFiltered<T>(DepositsFilterDefinition filterDefinition)
+        {
+            var entities = _depositsRepository.All()
+                .Where(d =>
+                    d.MinAmount <= filterDefinition.Amount &&
+                    (d.MaxAmount == null || d.MaxAmount >= filterDefinition.Amount) &&
+                    d.Currency == filterDefinition.Currency &&
+                    d.InterestOptions.Any(i => i.Type == filterDefinition.InterestType));
+
+            return entities.Select(e => _mapper.Map<T>(e));
+        }
+
         public T GetById<T>(string id)
         {
             var deposit = _depositsRepository.All().FirstOrDefault(c => c.Id == id);
