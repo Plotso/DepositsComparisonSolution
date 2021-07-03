@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using DepositsComparer.Models;
-using DepositsComparer.Services;
-using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-
-namespace DepositsComparer.Controllers
+﻿namespace DepositsComparer.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using DepositsComparer.Services;
+    using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Linq;
+    
     public class DepositController : Controller
     {
         private readonly ILogger<DepositController> _logger;
