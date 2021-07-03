@@ -59,6 +59,9 @@ dlldata.c
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
+# Migrations
+DepositsComparisonSolution/DepositsComparison.Data/Migrations/
+
 # .NET Core
 project.lock.json
 project.fragment.lock.json
