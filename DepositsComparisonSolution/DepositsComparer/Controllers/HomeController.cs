@@ -22,7 +22,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var depositResponce = await _apiConsumer.GetAllDeposits();
+            var depositResponce = await _apiConsumer.GetAllDepositsAsync();
             return View(depositResponce);
         }
         public IActionResult Privacy()

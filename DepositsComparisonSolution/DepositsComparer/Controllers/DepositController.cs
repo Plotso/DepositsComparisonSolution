@@ -25,7 +25,7 @@
         public async Task<IActionResult> All()
         {
             var getAllDepositsResponse = await _apiConsumer
-                .GetAllDeposits();
+                .GetAllDepositsAsync();
             return View(getAllDepositsResponse.Deposits
                 .OrderBy(x => x.Bank.Name).ThenBy(m => m.MinAmount));
         }
@@ -35,7 +35,7 @@
             if (id == "Депозити и сметки")
             {
                 var getAllDepositResponse = await _apiConsumer
-                    .GetAllDeposits();
+                    .GetAllDepositsAsync();
                 return View(getAllDepositResponse.Deposits);
             }
             return Redirect("Home/PageNotFound");
@@ -45,7 +45,7 @@
         public async Task<IActionResult> Details(string id)
         {
             var getCurrDepositResponse = await _apiConsumer
-                .GetAllDeposits();
+                .GetAllDepositsAsync();
             var a = getCurrDepositResponse.Deposits
                 .FirstOrDefault(x => x.Name == id);
             return View(a);
@@ -63,7 +63,7 @@
                 percentage = 0.61m;
             }
             var getAllDepositResponse = _apiConsumer
-                .GetAllDeposits().Result.Deposits
+                .GetAllDepositsAsync().Result.Deposits
                 .Select(x =>  new DepositInfo
                 {
                     Name = x.Name,
@@ -81,7 +81,7 @@
         public async Task<IActionResult> AllOrderByType()
         {
             var getAllDepositsResponse = await _apiConsumer
-                .GetAllDeposits();
+                .GetAllDepositsAsync();
             return View("All", getAllDepositsResponse.Deposits
                 .OrderBy(x => x.Name));
         }
@@ -89,7 +89,7 @@
         public async Task<IActionResult> AllOrderByPaymentType()
         {
             var getAllDepositsResponse = await _apiConsumer
-                .GetAllDeposits();
+                .GetAllDepositsAsync();
             return View("All", getAllDepositsResponse.Deposits
                 .OrderBy(x => x.InterestPaymentInfo));
         }
