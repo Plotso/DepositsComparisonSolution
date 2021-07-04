@@ -150,13 +150,29 @@ namespace DepositsCreator
     {
         public Banks()
         {
-            Add("Инвестбанк");
-            Add("Обединена Българска Банка");
-            Add("Д Банк");
-            Add("УниКредит Булбанк");
-            Add("Алианц Банк България");
-            Add("ТИ БИ АЙ Банк");
-            Add("Централна Кооперативна Банка");
+            var client = new RestClient("https://localhost:5001");
+
+            var request = new RestRequest("/Banks/GetAllBanks", Method.GET);
+            request.RequestFormat = DataFormat.Json;
+
+            var response = client.Execute<GetAllBanksResponse>(request);
+            if (response.Data.Banks.Any())
+            {
+                foreach (var bank in response.Data.Banks.GroupBy(b => b.Name))
+                {
+                    Add(bank.Key);
+                }
+            }
+            else
+            {
+                Add("Инвестбанк");
+                Add("Обединена Българска Банка");
+                Add("Д Банк");
+                Add("УниКредит Булбанк");
+                Add("Алианц Банк България");
+                Add("ТИ БИ АЙ Банк");
+                Add("Централна Кооперативна Банка");
+            }
         }
     }
 
