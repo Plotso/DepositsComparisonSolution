@@ -138,6 +138,11 @@ namespace DepositsCreator
             request.AddJsonBody(requestModel);
 
             var response = client.Execute<CreateDepositResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                Console.WriteLine($"[ERROR] {response.Data.ErrorMessage}");
+            }
         }
     }
 
@@ -145,11 +150,13 @@ namespace DepositsCreator
     {
         public Banks()
         {
-            Add("DSK");
-            Add("REIFFEISEN");
-            Add("OBB");
-            Add("UNICREDIT");
-            Add("NBU");
+            Add("Инвестбанк");
+            Add("Обединена Българска Банка");
+            Add("Д Банк");
+            Add("УниКредит Булбанк");
+            Add("Алианц Банк България");
+            Add("ТИ БИ АЙ Банк");
+            Add("Централна Кооперативна Банка");
         }
     }
 

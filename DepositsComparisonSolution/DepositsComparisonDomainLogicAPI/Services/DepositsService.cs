@@ -1,5 +1,6 @@
 ﻿namespace DepositsComparisonDomainLogicAPI.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -58,6 +59,7 @@
             
             var deposit = _mapper.Map<Deposit>(inputModel);
             deposit.BankId = inputModel.BankId;
+            deposit.Id = Guid.NewGuid().ToString();
 
             await _depositsRepository.AddAsync(deposit);
             await _depositsRepository.SaveChangesAsync();

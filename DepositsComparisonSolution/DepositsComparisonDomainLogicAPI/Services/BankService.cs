@@ -51,7 +51,7 @@
         public string GetBankIdByName(string bankName)
         {
             var bank = _banksRepository.All().FirstOrDefault(c => c.Name == bankName);
-            return bank.Name;
+            return bank?.Id;
         }
     }
 }
