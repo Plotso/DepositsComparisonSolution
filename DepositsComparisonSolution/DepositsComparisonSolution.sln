@@ -22,8 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparison.Data.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparison.Data.Public", "DepositsComparison.Data.Public\DepositsComparison.Data.Public.csproj", "{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop framework stefan", "Desktop framework stefan\Desktop framework stefan.csproj", "{862CDBD3-062D-4860-B134-1104783705CA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,9 +65,5 @@ Global
 		{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{862CDBD3-062D-4860-B134-1104783705CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{862CDBD3-062D-4860-B134-1104783705CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{862CDBD3-062D-4860-B134-1104783705CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{862CDBD3-062D-4860-B134-1104783705CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

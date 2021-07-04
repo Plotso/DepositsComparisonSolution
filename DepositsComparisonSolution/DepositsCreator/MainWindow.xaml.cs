@@ -142,6 +142,11 @@ namespace DepositsCreator
             request.AddJsonBody(requestModel);
 
             var response = client.Execute<CreateDepositResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                Console.WriteLine($"[ERROR] {response.Data.ErrorMessage}");
+            }
         }
     }
 
@@ -149,11 +154,29 @@ namespace DepositsCreator
     {
         public Banks()
         {
-            Add("DSK");
-            Add("REIFFEISEN");
-            Add("OBB");
-            Add("UNICREDIT");
-            Add("NBU");
+            var client = new RestClient("https://localhost:5001");
+
+            var request = new RestRequest("/Banks/GetAllBanks", Method.GET);
+            request.RequestFormat = DataFormat.Json;
+
+            var response = client.Execute<GetAllBanksResponse>(request);
+            if (response.Data.Banks.Any())
+            {
+                foreach (var bank in response.Data.Banks.GroupBy(b => b.Name))
+                {
+                    Add(bank.Key);
+                }
+            }
+            else
+            {
+                Add("Инвестбанк");
+                Add("Обединена Българска Банка");
+                Add("Д Банк");
+                Add("УниКредит Булбанк");
+                Add("Алианц Банк България");
+                Add("ТИ БИ АЙ Банк");
+                Add("Централна Кооперативна Банка");
+            }
         }
     }
 
@@ -161,11 +184,11 @@ namespace DepositsCreator
     {
         public Currencies()
         {
-            Add("BGN");
-            Add("USD");
-            Add("EUR");
-            Add("HUI");
-            Add("KUR");
+            var currencies = Enum.GetNames(typeof(Currency));
+            foreach (var currency in currencies)
+            {
+                Add(currency);
+            }
         }
     }
 
