@@ -84,8 +84,12 @@ namespace DepositsCreator
                 txtMaxValue.Focus();
                 txtMaxValue.Text = "Стойността трябва да е число!";
             }
-
-            //TODO add check if the number is negative
+            
+            else if (int.Parse(txtMaxValue.Text) < 1)
+            {
+                txtMaxValue.Focus();
+                txtMaxValue.Text = "Стойността трябва да е положителна!";
+            }
 
             else if (int.Parse(txtMaxValue.Text) > 100000)
             {
