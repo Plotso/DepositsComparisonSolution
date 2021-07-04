@@ -180,11 +180,11 @@ namespace DepositsCreator
     {
         public Currencies()
         {
-            Add("BGN");
-            Add("USD");
-            Add("EUR");
-            Add("HUI");
-            Add("KUR");
+            var currencies = Enum.GetNames(typeof(Currency));
+            foreach (var currency in currencies)
+            {
+                Add(currency);
+            }
         }
     }
 
