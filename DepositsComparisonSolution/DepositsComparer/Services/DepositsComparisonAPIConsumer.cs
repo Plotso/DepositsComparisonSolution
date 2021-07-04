@@ -8,7 +8,7 @@
 
     public class DepositsComparisonAPIConsumer : IDepositsComparisonAPIConsumer
     {
-        private const string GetAllBankProductsPath = "BankProducts/GetBankProducts";
+        private const string GetAllBankProductsPath = "BankProducts/GetAllBankProducts";
         private const string GetAllDepositsPath = "Deposits/GetAllDeposits";
         
         private readonly IOptions<APIConsumerSettings> _settings;
