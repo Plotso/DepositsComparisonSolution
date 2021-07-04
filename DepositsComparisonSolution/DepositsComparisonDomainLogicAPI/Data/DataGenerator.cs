@@ -47,7 +47,7 @@
                 var getDepositsResult = await scraper.GetDepositsAsync();
                 logger.LogInformation($"Scraper {scraper.GetType().Name} generated deposits data from {getDepositsResult.SourceURL}");
 
-                var banks = getDepositsResult.Deposits.Select(d => d.Bank);
+                var banks = getDepositsResult.Deposits.Select(d => d.Bank).Distinct();
                 await banksDbSeeder.SeedAsync(dbContext, banks.Select(b => mapper.Map<Bank>(b)));
 
                 await depositsDbSeeder.SeedAsync(dbContext,
