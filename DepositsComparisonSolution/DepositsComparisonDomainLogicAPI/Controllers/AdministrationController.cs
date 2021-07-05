@@ -55,34 +55,46 @@
             
             var createDepositInput = _mapper.Map<DepositCreateInputModel>(request.Deposit);
             createDepositInput.BankId = bankId;
-            
-            var depositId = await _depositsService.CreateAsync(createDepositInput); // ToDo: Handle potential exception
-            if (string.IsNullOrEmpty(depositId))
-            {
-                _logger.LogError($"DepositId cannot be null or empty");
-                return new CreateDepositResponse
-                {
-                    IsSuccess = false,
-                    ErrorMessage =
-                        $"Internal error occured during processing of you request. Please try again later."
-                };
-            }
 
-            foreach (var interest in request.Deposit.InterestOptions)
+            try
             {
-                try
+                var depositId = await _depositsService.CreateAsync(createDepositInput); // ToDo: Handle potential exception
+                if (string.IsNullOrEmpty(depositId))
                 {
-                    await _interestService.CreateAsync(interest.Months, interest.Percentage, interest.Type, depositId);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e.Message);
+                    _logger.LogError($"DepositId cannot be null or empty");
                     return new CreateDepositResponse
                     {
                         IsSuccess = false,
-                        ErrorMessage = e.Message
+                        ErrorMessage =
+                            $"Internal error occured during processing of you request. Please try again later."
                     };
                 }
+
+                foreach (var interest in request.Deposit.InterestOptions)
+                {
+                    try
+                    {
+                        await _interestService.CreateAsync(interest.Months, interest.Percentage, interest.Type, depositId);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(e.Message);
+                        return new CreateDepositResponse
+                        {
+                            IsSuccess = false,
+                            ErrorMessage = e.Message
+                        };
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"An unexpected error occured during CreateDeposit execution");
+                return new CreateDepositResponse
+                {
+                    IsSuccess = false,
+                    ErrorMessage = e.Message
+                };
             }
 
             // Return success if deposit and all interests are successfully inserted
@@ -95,6 +107,7 @@
         private bool IsDepositInfoValid(DepositInfo depositInfo)
             => !string.IsNullOrEmpty(depositInfo.Name) &&
                depositInfo.Bank != null &&
-               depositInfo.MinAmount >= 0.0m;
+               depositInfo.MinAmount >= 0.0m &&
+               (!depositInfo.MaxAmount.HasValue || depositInfo.MaxAmount.Value >= depositInfo.MinAmount);
     }
 }
