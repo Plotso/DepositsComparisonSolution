@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfo>
+<body>
+    <hr><h1 class="section-heading text-uppercase text-center">Депозити</h1>
+    <h2 class="section-heading text-uppercase text-center">Намерени оферти</h2><hr />
+
+    @foreach (var item in Model)
+    {
+        <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Сума</th>
+                    <th>Период</th>
+                    <th>Тип</th>
+                    <th>Банка</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@item.MinAmount @item.Currency</th>
+                    <td>
+                        @if (@item.InterestOptions.FirstOrDefault() != null)
+                        {
+                            @item.InterestOptions.FirstOrDefault().Months
+                        }
+                    </td>
+                    <td>
+                        @if (item.InterestOptions.FirstOrDefault() != null)
+                        {
+                            @item.InterestOptions.FirstOrDefault().Months
+                        }
+                    </td>
+                    <td>@item.Bank.Name</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Deposit" asp-route-Id="@item.Name" class="btn">
+                            <i class="fas fa-info-circle" style="color: darkorange"></i>Информация
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</body>

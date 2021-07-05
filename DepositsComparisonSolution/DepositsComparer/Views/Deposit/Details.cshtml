@@ -18,7 +18,12 @@
             </tr>
             <tr>
                 <th scope="col">Вид лихва</th>
-                <td>@Model.InterestOptions.FirstOrDefault().Type</td>
+                <td>
+                    @if (@Model.InterestOptions.FirstOrDefault() != null)
+                    {
+                        @Model.InterestOptions.FirstOrDefault().Type
+                    }
+                            </td>
             </tr>
             <tr>
                 <th scope="row">Договорена лихва</th>
@@ -38,11 +43,23 @@
             </tr>
             <tr>
                 <th scope="row">Период(месеци)</th>
-                <td>@Model.InterestOptions.FirstOrDefault().Months</td>
+                <td>
+                    @if (@Model.InterestOptions.FirstOrDefault() != null)
+                    {
+                        @Model.InterestOptions.FirstOrDefault().Months
+                    }
+
+                </td>
             </tr>
             <tr>
                 <th scope="row">Процент</th>
-                <td>@Model.InterestOptions.FirstOrDefault().Percentage%</td>
+                <td>
+                    @if (@Model.InterestOptions.FirstOrDefault() != null)
+                    {
+                       @Model.InterestOptions.FirstOrDefault().Percentage
+                    }
+                    %
+                </td>
             </tr>
             
         </tbody>

@@ -7,7 +7,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Linq;
-    
+    using DepositsComparisonDomainLogic.Contracts;
+
     public class DepositController : Controller
     {
         private readonly ILogger<DepositController> _logger;
@@ -30,15 +31,41 @@
                 .OrderBy(x => x.Bank.Name).ThenBy(m => m.MinAmount));
         }
 
-        public async Task<IActionResult> Comparer(string id)
+        public IActionResult Comparer(string id)
         {
             if (id == "Депозити и сметки")
             {
-                var getAllDepositResponse = await _apiConsumer
-                    .GetAllDepositsAsync();
-                return View(getAllDepositResponse.Deposits);
+                return View();
             }
             return Redirect("Home/PageNotFound");
+        }
+
+        public async Task<IActionResult> ComparerResult(GetFilteredDepositsRequest filterR)
+        {
+            var filterDeposits = (IEnumerable<DepositInfo>)_apiConsumer.GetAllDepositsAsync().Result.Deposits
+                .Select(x => new DepositInfo
+                {
+                    Name = x.Name,
+                    Bank = x.Bank,
+                    MinAmount = x.MinAmount,
+                    MaxAmount = x.MaxAmount,
+                    InterestDetails = x.InterestDetails,
+                    InterestPaymentInfo = x.InterestPaymentInfo,
+                    Currency = x.Currency,
+                    InterestOptions = x.InterestOptions.Select(i => new InterestInfo()
+                    {
+                        Months = i.Months,
+                        Percentage = i.Percentage,
+                        Type = i.Type
+                    })
+                })
+                .Where(x => 
+                (x.MinAmount <= filterR.Amount) && 
+                (x.Currency == filterR.Currency))
+                .OrderBy(c => c.MinAmount);
+            var filter =await _apiConsumer.GetFilteredDepositsAsync(filterR.Amount,
+                filterR.Currency, filterR.InterestType, filterR.PeriodInMonths);
+            return View(filterDeposits);
         }
 
         [Route("Deposit/Details/{id}")]
@@ -46,9 +73,8 @@
         {
             var getCurrDepositResponse = await _apiConsumer
                 .GetAllDepositsAsync();
-            var a = getCurrDepositResponse.Deposits
-                .FirstOrDefault(x => x.Name == id);
-            return View(a);
+            return View(getCurrDepositResponse.Deposits
+                .FirstOrDefault(x => x.Name == id));
         }
 
         public IActionResult Currency(string id)

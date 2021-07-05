@@ -1,46 +1,37 @@
-﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfo>
-<body>
-    <hr><h1 class="section-heading text-uppercase text-center">Депозит</h1>
-    <h2 class="section-heading text-uppercase text-center">Намерете най-добрата оферта</h2><hr />
-    <p>
-        Сравнете <strong>@Model.Select(x => x.Name).Count() оферти</strong> от <strong>@Model.GroupBy(x => x.Bank.Name).Count() банки</strong>
-    </p>
-    <div class="top-search-form">
-        <div class="form-row clearfix">
-
-            <div class="input-holder">
-                <label> Размер на кредита</label>
-
-                <div class="input-num-wrapper buttons_added focused">
-                    <input name="" type="number" id="" min="" max="" mystep="1000" value="10000" class="input-text qty">
+﻿@using DepositsComparison.Data.Public
+@model DepositsComparisonDomainLogic.Contracts.GetFilteredDepositsRequest
+@{
+    this.ViewData["Title"] = "Deposit comparer";
+}
+<body class="vw-100 vh-100 overflow-auto" id="emp">
+    <div style=" padding-left: 20%; padding-right: 20%; padding-top: 10%;">
+        <div style="background-color: white;">
+            <form method="post" class="col-md-9 offset-md-1">
+                <h2>Сравни депозити</h2>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Amount"></label>
+                    <input asp-for="Amount" class="form-control" rows="2" maxlength="36" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
                 </div>
-            </div>
-
-            <div class="input-holder">
-                <label>Валута</label>
-
-
-                <div class="selecter  closed" tabindex="0">
-                    <select tabindex="-1">
-                        <option>BGN</option>
-                        <option>EUR</option>
-                    </select>
+                <div class="form-group">
+                    <label asp-for="Currency"></label>
+                    <input asp-for="Currency" class="form-control" />
+                    <span asp-validation-for="Currency" class="text-danger"></span>
                 </div>
-            </div>
-        </div><p></p>
-        <div class="form-row clearfix">
-            <div class="input-holder">
-                <label> Срок на кредита</label>
-
-                <div class="selecter  closed" tabindex="0">
-                    <select name="" id="" class="selecter-main selecter-element" tabindex="-1">
-                        <option value="48">4 години</option>
-                        <option value="48">4 години</option>
-                        <option value="60">5 години</option>
-                        <option value="72">6 години</option>
-                    </select>
+                <div class="form-group">
+                    <label asp-for="InterestType"></label>
+                    <select asp-for="InterestType" asp-items="@Html.GetEnumSelectList<InterestType>()" class="form-control  col-md-4"></select>
+                    <span asp-validation-for="InterestType" class="text-danger"></span>
                 </div>
-            </div>
-        </div><hr />
+                <div class="form-group">
+                    <label asp-for="PeriodInMonths"></label>
+                    <input asp-for="PeriodInMonths" class="form-control" />
+                    <span asp-validation-for="PeriodInMonths" class="text-danger"></span>
+                </div>
+                <input type="submit" class="btn btn-primary" asp-area="" asp-controller="Deposit" asp-action="ComparerResult" />
+                <br />
+            </form>
+        </div>
     </div>
 </body>
