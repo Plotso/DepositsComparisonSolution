@@ -111,7 +111,7 @@
 
             if (isSuccess)
             {
-                var client = new RestClient("https://localhost:5001");
+                var client = new RestClient(RouteConstants.ApiUrl);
 
                 var requestModel = new CreateDepositRequest
                 {
@@ -139,7 +139,7 @@
                     }
                 };
 
-                var request = new RestRequest("/Administration/CreateDeposit", Method.POST);
+                var request = new RestRequest(RouteConstants.CreateDepositEndpoint, Method.POST);
                 request.RequestFormat = DataFormat.Json;
                 request.AddJsonBody(requestModel);
 
@@ -147,12 +147,12 @@
 
                 if (!response.Data.IsSuccess)
                 {
-                    MessageBox.Show($"[ERROR] {response.Data.ErrorMessage}");
-                    Console.WriteLine($"[ERROR] {response.Data.ErrorMessage}");
+                    MessageBox.Show($"[ERROR][API] {response.Data.ErrorMessage}");
+                    Console.WriteLine($"[ERROR][API] {response.Data.ErrorMessage}");
                 }
                 else
                 {
-                    MessageBox.Show($"Successfully created deposit {DeposiTxtName.Text}");
+                    MessageBox.Show($"Successfully created deposit \"{DeposiTxtName.Text}\"");
                 
                     DeposiTxtName.Text = string.Empty;
                     txtMinValue.Text = string.Empty;
@@ -167,9 +167,9 @@
     {
         public Banks()
         {
-            var client = new RestClient("https://localhost:5001");
+            var client = new RestClient(RouteConstants.ApiUrl);
 
-            var request = new RestRequest("/Banks/GetAllBanks", Method.GET);
+            var request = new RestRequest(RouteConstants.GetAllBanksEndpoint, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
             var response = client.Execute<GetAllBanksResponse>(request);
