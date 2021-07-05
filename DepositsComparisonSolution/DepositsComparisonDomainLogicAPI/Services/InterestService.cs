@@ -52,6 +52,7 @@
             
             var interest = new Interest
             {
+                Id = Guid.NewGuid().ToString(),
                 Months = months,
                 Percentage = percentage,
                 Type = type,

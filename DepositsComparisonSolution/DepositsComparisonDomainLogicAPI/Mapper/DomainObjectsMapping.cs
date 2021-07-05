@@ -10,13 +10,13 @@
     {
         public DomainObjectsMapping()
         {
-            CreateMap<DepositInfo, DepositCreateInputModel>();
+            CreateMap<DepositInfo, DepositCreateInputModel>().ReverseMap();
+            CreateMap<DepositCreateInputModel, Deposit>();
             
             CreateMap<Bank, BankInfo>().ReverseMap();
             CreateMap<BankProduct, BankProductInfo>().ReverseMap();
-            CreateMap<Deposit, DepositInfo>().ReverseMap();
-            CreateMap<Bank, BankInfo>().ReverseMap();
             CreateMap<Interest, InterestInfo>().ReverseMap();
+            CreateMap<Deposit, DepositInfo>().ReverseMap();
         }
     }
 }
