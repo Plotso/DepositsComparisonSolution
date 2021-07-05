@@ -107,6 +107,7 @@
         private bool IsDepositInfoValid(DepositInfo depositInfo)
             => !string.IsNullOrEmpty(depositInfo.Name) &&
                depositInfo.Bank != null &&
-               depositInfo.MinAmount >= 0.0m;
+               depositInfo.MinAmount >= 0.0m &&
+               (!depositInfo.MaxAmount.HasValue || depositInfo.MaxAmount.Value >= depositInfo.MinAmount);
     }
 }

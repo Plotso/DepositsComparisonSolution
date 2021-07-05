@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using DepositsComparison.Data.Public;
-using DepositsComparisonDomainLogic.Contracts;
-using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
-using RestSharp;
-using DataFormat = RestSharp.DataFormat;
-
-namespace DepositsCreator
+﻿namespace DepositsCreator
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
+    using DepositsComparison.Data.Public;
+    using DepositsComparisonDomainLogic.Contracts;
+    using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
+    using RestSharp;
+    using DataFormat = RestSharp.DataFormat;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -32,11 +22,13 @@ namespace DepositsCreator
             var curr = new Currencies();
             var term = new Terms();
             var interest = new Interests();
+            
             InitializeComponent();
         }
 
         private void SeedButton_Click(object sender, RoutedEventArgs e)
         {
+            bool isSuccess = true;
             bool isMaxOk = false;
             bool isMinOk = false;
 
@@ -58,16 +50,19 @@ namespace DepositsCreator
             {
                 txtMinValue.Focus();
                 txtMinValue.Text = "Няма въведена стойност!";
+                isSuccess = false;
             }
             else if (IsDigitsOnly(txtMinValue.Text).Equals(false))
             {
                 txtMinValue.Focus();
                 txtMinValue.Text = "Стойността трябва да е число!";
+                isSuccess = false;
             }
             else if (int.Parse(txtMinValue.Text) < 1)
             {
                 txtMinValue.Focus();
                 txtMinValue.Text = "Стойността трябва да е положителна!";
+                isSuccess = false;
             }
             else
             {
@@ -78,23 +73,27 @@ namespace DepositsCreator
             {
                 txtMaxValue.Focus();
                 txtMaxValue.Text = "Няма въведена стойност!";
+                isSuccess = false;
             }
             else if (IsDigitsOnly(txtMaxValue.Text).Equals(false))
             {
                 txtMaxValue.Focus();
                 txtMaxValue.Text = "Стойността трябва да е число!";
+                isSuccess = false;
             }
             
             else if (int.Parse(txtMaxValue.Text) < 1)
             {
                 txtMaxValue.Focus();
                 txtMaxValue.Text = "Стойността трябва да е положителна!";
+                isSuccess = false;
             }
 
             else if (int.Parse(txtMaxValue.Text) > 100000)
             {
                 txtMaxValue.Focus();
                 txtMaxValue.Text = "Стойността не може да надвишава 100 000!";
+                isSuccess = false;
             }
             else
             {
@@ -106,46 +105,60 @@ namespace DepositsCreator
                 if (int.Parse(txtMaxValue.Text) < int.Parse(txtMinValue.Text))
                 {
                     MessageBox.Show("Максималната въведена стойност е по-ниска от минималната!");
+                    isSuccess = false;
                 }
             }
 
-            var client = new RestClient("https://localhost:5001");
-
-            var requestModel = new CreateDepositRequest
+            if (isSuccess)
             {
-                Deposit = new DepositInfo
+                var client = new RestClient("https://localhost:5001");
+
+                var requestModel = new CreateDepositRequest
                 {
-                    Bank = new BankInfo
+                    Deposit = new DepositInfo
                     {
-                        Name = BankComboBox.Text
-                    },
-                    Currency = (Currency) Enum.Parse(typeof(Currency), CurencyComboBox.Text),
-                    InterestDetails = string.Empty,
-                    InterestOptions = new List<InterestInfo>
-                    {
-                        new InterestInfo
+                        Bank = new BankInfo
                         {
-                            Months = int.Parse(TermsComboBox.Text),
-                            Percentage = decimal.Parse(percentageComboBox.Text),
-                            Type = InterestType.Fixed
-                        }
-                    },
-                    InterestPaymentInfo = String.Empty,
-                    MaxAmount = decimal.Parse(txtMaxValue.Text),
-                    MinAmount = decimal.Parse(txtMinValue.Text),
-                    Name = DeposiTxtName.Text
+                            Name = BankComboBox.Text
+                        },
+                        Currency = (Currency) Enum.Parse(typeof(Currency), CurencyComboBox.Text),
+                        InterestDetails = string.Empty,
+                        InterestOptions = new List<InterestInfo>
+                        {
+                            new InterestInfo
+                            {
+                                Months = int.Parse(TermsComboBox.Text),
+                                Percentage = decimal.Parse(percentageComboBox.Text),
+                                Type = InterestType.Fixed
+                            }
+                        },
+                        InterestPaymentInfo = String.Empty,
+                        MaxAmount = decimal.Parse(txtMaxValue.Text),
+                        MinAmount = decimal.Parse(txtMinValue.Text),
+                        Name = DeposiTxtName.Text
+                    }
+                };
+
+                var request = new RestRequest("/Administration/CreateDeposit", Method.POST);
+                request.RequestFormat = DataFormat.Json;
+                request.AddJsonBody(requestModel);
+
+                var response = client.Execute<CreateDepositResponse>(request);
+
+                if (!response.Data.IsSuccess)
+                {
+                    MessageBox.Show($"[ERROR] {response.Data.ErrorMessage}");
+                    Console.WriteLine($"[ERROR] {response.Data.ErrorMessage}");
                 }
-            };
-
-            var request = new RestRequest("/Administration/CreateDeposit", Method.POST);
-            request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(requestModel);
-
-            var response = client.Execute<CreateDepositResponse>(request);
-
-            if (!response.IsSuccessful)
-            {
-                Console.WriteLine($"[ERROR] {response.Data.ErrorMessage}");
+                else
+                {
+                    MessageBox.Show($"Successfully created deposit {DeposiTxtName.Text}");
+                
+                    DeposiTxtName.Text = string.Empty;
+                    txtMinValue.Text = string.Empty;
+                    txtMaxValue.Text = string.Empty;
+                    BankComboBox.Text = string.Empty;
+                }
             }
         }
     }
