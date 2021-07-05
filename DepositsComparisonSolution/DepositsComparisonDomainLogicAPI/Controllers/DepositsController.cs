@@ -31,7 +31,7 @@
             };
         }
 
-        [HttpGet(nameof(GetFilteredDeposits))]
+        [HttpPost(nameof(GetFilteredDeposits))]
         public GetFilteredDepositsResponse GetFilteredDeposits(GetFilteredDepositsRequest request)
         {
             var filterDefinition = new DepositsFilterDefinition

@@ -4,7 +4,6 @@
     using Configuration;
     using DepositsComparison.Data.Public;
     using DepositsComparisonDomainLogic.Contracts;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using RestSharp;
 
@@ -37,7 +36,6 @@
             return response.Data;
         }
 
-        [HttpPost(nameof(GetFilteredDepositsResponse))]
         public async Task<GetFilteredDepositsResponse> GetFilteredDepositsAsync(decimal amount, Currency currency, InterestType interestType, int periodInMonths)
         {
             var client = new RestClient(_settings.Value.Url);

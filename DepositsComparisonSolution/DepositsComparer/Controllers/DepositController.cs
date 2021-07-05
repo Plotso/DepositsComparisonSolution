@@ -40,32 +40,10 @@
             return Redirect("Home/PageNotFound");
         }
 
-        public async Task<IActionResult> ComparerResult(GetFilteredDepositsRequest filterR)
+        public async Task<IActionResult> ComparerResult(GetFilteredDepositsRequest filter)
         {
-            var filterDeposits = (IEnumerable<DepositInfo>)_apiConsumer.GetAllDepositsAsync().Result.Deposits
-                .Select(x => new DepositInfo
-                {
-                    Name = x.Name,
-                    Bank = x.Bank,
-                    MinAmount = x.MinAmount,
-                    MaxAmount = x.MaxAmount,
-                    InterestDetails = x.InterestDetails,
-                    InterestPaymentInfo = x.InterestPaymentInfo,
-                    Currency = x.Currency,
-                    InterestOptions = x.InterestOptions.Select(i => new InterestInfo()
-                    {
-                        Months = i.Months,
-                        Percentage = i.Percentage,
-                        Type = i.Type
-                    })
-                })
-                .Where(x => 
-                (x.MinAmount <= filterR.Amount) && 
-                (x.Currency == filterR.Currency))
-                .OrderBy(c => c.MinAmount);
-            var filter =await _apiConsumer.GetFilteredDepositsAsync(filterR.Amount,
-                filterR.Currency, filterR.InterestType, filterR.PeriodInMonths);
-            return View(filterDeposits);
+            var filteredDeposits = await _apiConsumer.GetFilteredDepositsAsync(filter.Amount, filter.Currency, filter.InterestType, filter.PeriodInMonths);
+            return View(filteredDeposits.Deposits);
         }
 
         [Route("Deposit/Details/{id}")]
