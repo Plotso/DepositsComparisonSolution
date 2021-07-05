@@ -22,6 +22,7 @@
             var curr = new Currencies();
             var term = new Terms();
             var interest = new Interests();
+            var interestType = new InterestTypes();
             
             InitializeComponent();
         }
@@ -129,7 +130,7 @@
                             {
                                 Months = int.Parse(TermsComboBox.Text),
                                 Percentage = decimal.Parse(percentageComboBox.Text),
-                                Type = InterestType.Fixed
+                                Type = (InterestType) Enum.Parse(typeof(InterestType), InterestTypeComboBox.Text),
                             }
                         },
                         InterestPaymentInfo = String.Empty,
@@ -236,6 +237,18 @@
             Add("24");
             Add("30");
             Add("36");
+        }
+    }
+
+    class InterestTypes : ObservableCollection<string>
+    {
+        public InterestTypes()
+        {
+            var interestTypes = Enum.GetNames(typeof(InterestType));
+            foreach (var type in interestTypes)
+            {
+                Add(type);
+            }
         }
     }
 }
