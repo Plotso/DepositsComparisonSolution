@@ -97,13 +97,5 @@
             return View("All", getAllDepositsResponse.Deposits
                 .OrderBy(x => x.InterestPaymentInfo));
         }
-
-        public IActionResult GetAllBankProduct()
-        {
-            Task<IEnumerable<BankInfo>> getAllDepositsResponse =
-                (Task<IEnumerable<BankInfo>>)_apiConsumer
-                .GetAllBankProductsAsync().Result.BankProducts;
-            return View(getAllDepositsResponse);
-        }
     }
 }
