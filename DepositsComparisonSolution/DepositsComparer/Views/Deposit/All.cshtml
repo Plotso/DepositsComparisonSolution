@@ -1,0 +1,64 @@
+﻿@using DepositsComparisonDomainLogic.Contracts.Models.Deposits
+<body class="vw-100 vh-100 overflow-auto">
+    <div>
+        <p>Подреди по: </p>
+        <ul class="list-group-horizontal">
+            <li>
+                <a asp-area="" asp-controller="Deposit" asp-action="All">Дата на издаване</a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Deposit" asp-action="AllOrderByType">Tип на депозита</a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Deposit" asp-action="AllOrderByPaymentType">Начин на плащане</a>
+            </li>
+        </ul>
+        <hr />
+    </div>
+
+    <div>
+        <p>Валута: </p>
+        <ul class="list-group-horizontal">
+            <li>
+                <a asp-controller="Deposit" asp-action="Currency" asp-route-Id="BGN" class="btn">Български лев</a>
+            </li>
+            <li>
+                <a asp-controller="Deposit" asp-action="Currency" asp-route-Id="EUR" class="btn">Евро</a>
+            </li>
+            <li>
+                <a asp-controller="Deposit" asp-action="Currency" asp-route-Id="USD" class="btn">Долар</a>
+            </li>
+        </ul>
+        <hr />
+    </div>
+
+    <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
+        <thead class="thead-dark">
+            <tr>
+                <th>Банка</th>
+                <th>Вид</th>
+                <th>Минимален</th>
+                <th>Плащане</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DepositInfo deposit in Model)
+            {
+                <tr>
+                    <th scope="row">@deposit.Bank.Name</th>
+                    <td>
+                        @deposit.Name
+                    </td>
+                    <td>@deposit.MinAmount</td>
+                    <td>@deposit.InterestPaymentInfo</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Deposit" asp-route-Id="@deposit.Name" class="btn">
+                        <i class="fas fa-info-circle" style="color: darkorange"></i>Информация</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

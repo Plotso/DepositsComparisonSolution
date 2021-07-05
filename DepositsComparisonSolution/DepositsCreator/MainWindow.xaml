@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DepositsCreator"
         mc:Ignorable="d"
-        Title="Deposit creator" Height="450" Width="525"
+        Title="Deposit creator" Height="550" Width="525"
         Icon="https://cdn.icon-icons.com/icons2/2104/PNG/512/bank_icon_129525.png">
     <StackPanel Margin="10">
 
@@ -14,6 +14,7 @@
             <local:Currencies x:Key="myCurrencies" />
             <local:Terms x:Key="myTerms" />
             <local:Interests x:Key="myInterests" />
+            <local:InterestTypes x:Key="myInterestTypes"/>
         </StackPanel.Resources>
 
         <Label Target="{Binding ElementName=DeposiTxtName}">
@@ -86,6 +87,19 @@
         <ComboBox Name="percentageComboBox"
                   ItemsSource="{StaticResource myInterests}"
                   Text="Interests"
+                  IsEditable="true"
+                  IsReadOnly="true" />
+        
+
+        <Label Target="{Binding ElementName=txtInterestType}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="http://cdn1.iconfinder.com/data/icons/fatcow/16/bullet_blue.png" />
+                <AccessText Text="_InterestType:" />
+            </StackPanel>
+        </Label>
+        <ComboBox Name="InterestTypeComboBox"
+                  ItemsSource="{StaticResource myInterestTypes}"
+                  Text="InterestType"
                   IsEditable="true"
                   IsReadOnly="true" />
 

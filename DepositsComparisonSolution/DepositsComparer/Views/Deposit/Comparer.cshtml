@@ -1,0 +1,37 @@
+﻿@using DepositsComparison.Data.Public
+@model DepositsComparisonDomainLogic.Contracts.GetFilteredDepositsRequest
+@{
+    this.ViewData["Title"] = "Deposit comparer";
+}
+<body class="vw-100 vh-100 overflow-auto" id="emp">
+    <div style=" padding-left: 20%; padding-right: 20%; padding-top: 10%;">
+        <div style="background-color: white;">
+            <form method="post" asp-action="ComparerResult" class="col-md-9 offset-md-1">
+                <h2>Сравни депозити</h2>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Amount"></label>
+                    <input asp-for="Amount" class="form-control" rows="2" maxlength="36" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Currency"></label>
+                    <select asp-for="Currency" asp-items="@Html.GetEnumSelectList<Currency>()" class="form-control  col-md-4"></select>
+                    <span asp-validation-for="Currency" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InterestType"></label>
+                    <select asp-for="InterestType" asp-items="@Html.GetEnumSelectList<InterestType>()" class="form-control  col-md-4"></select>
+                    <span asp-validation-for="InterestType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeriodInMonths"></label>
+                    <input asp-for="PeriodInMonths" class="form-control" />
+                    <span asp-validation-for="PeriodInMonths" class="text-danger"></span>
+                </div>
+                <input type="submit" class="btn btn-primary" asp-area="" asp-controller="Deposit" asp-action="ComparerResult" />
+                <br />
+            </form>
+        </div>
+    </div>
+</body>

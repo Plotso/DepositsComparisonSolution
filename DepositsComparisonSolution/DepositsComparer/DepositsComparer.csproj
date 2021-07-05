@@ -22,4 +22,8 @@
       <ProjectReference Include="..\DepositsComparisonDomainLogic.Contracts\DepositsComparisonDomainLogic.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\assets\mail" />
+    </ItemGroup>
+
 </Project>

@@ -1,33 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using DepositsComparer.Models;
-
-namespace DepositsComparer.Controllers
+﻿namespace DepositsComparer.Controllers
 {
-    using Services;
-
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using DepositsComparer.Models;
+    using DepositsComparer.Services;
+    using System.Threading.Tasks;
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDepositsComparisonAPIConsumer _apiConsumer;
 
-        public HomeController(ILogger<HomeController> logger, IDepositsComparisonAPIConsumer apiConsumer)
+        public HomeController(ILogger<HomeController> logger
+                             ,IDepositsComparisonAPIConsumer apiConsumer
+            )
         {
             _logger = logger;
             _apiConsumer = apiConsumer;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var depositResponce = await _apiConsumer.GetAllDepositsAsync();
+            return View(depositResponce);
+        }
+        public IActionResult Privacy()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult PageNotFound()
         {
             return View();
         }
