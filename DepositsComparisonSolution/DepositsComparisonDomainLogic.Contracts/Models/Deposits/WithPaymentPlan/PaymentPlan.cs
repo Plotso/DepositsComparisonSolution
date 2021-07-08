@@ -1,5 +1,7 @@
 ﻿namespace DepositsComparisonDomainLogic.Contracts.Models.Deposits
 {
+    using System.Collections.Generic;
+
     public class PaymentPlan
     {
         public decimal DepositAmount { get; set; }
@@ -18,5 +20,7 @@
         public decimal GrossPaymentAmount { get; set; }
         
         public decimal NetPaymentAmount { get; set; }
+        
+        public IEnumerable<PaymentPlanEntry> Entries { get; set; }
     }
 }

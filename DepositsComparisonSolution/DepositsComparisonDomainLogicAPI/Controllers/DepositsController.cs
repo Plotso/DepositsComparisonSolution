@@ -144,7 +144,8 @@
                     InterestTotalSum = totalInterestAmount,
                     InterestTotalTax = totalInterestTax,
                     GrossPaymentAmount = grossPaymentAmount,
-                    NetPaymentAmount = netPaymentAmount
+                    NetPaymentAmount = netPaymentAmount,
+                    Entries = paymentPlanEntries
                 };
             }
             else
