@@ -1,5 +1,8 @@
 ﻿namespace DepositsComparisonDomainLogicAPI.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using DepositsComparison.Data.Public;
     using DepositsComparisonDomainLogic.Contracts;
     using DepositsComparisonDomainLogic.Contracts.Models.Deposits;
     using Microsoft.AspNetCore.Mvc;
@@ -11,6 +14,8 @@
     [Route("[controller]")]
     public class DepositsController : ControllerBase
     {
+        private const decimal InterestTaxPercentage = 8;
+        
         private readonly ILogger<DepositsController> _logger;
         private readonly IDepositsService _depositsService;
 
@@ -41,13 +46,112 @@
                 InterestType = request.InterestType,
                 PeriodInMonths = request.PeriodInMonths
             };
-            
+
             var deposits = _depositsService.GetFiltered<DepositInfo>(filterDefinition);
+
+            var depositsResult = new List<DepositInfoWithPaymentPlan>();
+
+            foreach (var deposit in deposits)
+            {
+                depositsResult.Add(new DepositInfoWithPaymentPlan
+                {
+                    Deposit = deposit,
+                    PaymentPlan = GetPaymentPlan(request.Amount, request.PeriodInMonths, deposit)
+                });
+            }
             
             return new GetFilteredDepositsResponse
             {
-                Deposits = deposits
+                Deposits = depositsResult
             };
+        }
+
+        private PaymentPlan GetPaymentPlan(decimal amount, int months, DepositInfo deposit)
+        {
+            var relevantInterests = deposit.InterestOptions.Where(i => i.Months == months).ToList();
+            
+            if (relevantInterests.All(i => i.Type == InterestType.Fixed))
+            {
+                var relevantInterest = relevantInterests.FirstOrDefault(i => i.Months == months && i.Type == InterestType.Fixed);
+                var paymentPlanEntries = new List<PaymentPlanEntry>();
+                
+                var interestAmount = amount * (relevantInterest.Percentage / 100);
+                var interestTax = interestAmount * (InterestTaxPercentage / 100);
+                var grossPaymentAmount = amount + interestAmount;
+                var netPaymentAmount = grossPaymentAmount - interestTax;
+                
+                var totalInterestAmount = 0m; // To be used in case of multi year deposits
+                var totalInterestTax = 0m; // To be used in case of multi year deposits
+                for (int i = 1; i <= months; i++)
+                {
+                    if (months >= 12)
+                    {
+                        if (months % 12 == 0)
+                        {
+                            totalInterestAmount += interestAmount;
+                            totalInterestTax += interestTax;
+                            var currentPaymentAmount = amount + totalInterestAmount - totalInterestTax;
+                            paymentPlanEntries.Add(new PaymentPlanEntry
+                            {
+                                Month = i,
+                                InterestPercentage = relevantInterest.Percentage,
+                                InterestAmount = totalInterestAmount,
+                                InterestTax = totalInterestTax,
+                                PaymentAmount = currentPaymentAmount,
+                                DepositAmount = amount
+                            });
+                            grossPaymentAmount = amount + totalInterestAmount;
+                            netPaymentAmount = grossPaymentAmount - totalInterestTax;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (months == i)
+                        {
+                            totalInterestAmount += interestAmount;
+                            totalInterestTax += interestTax;
+                            paymentPlanEntries.Add(new PaymentPlanEntry
+                            {
+                                Month = i,
+                                InterestPercentage = relevantInterest.Percentage,
+                                InterestAmount = interestAmount,
+                                InterestTax = interestTax,
+                                PaymentAmount = netPaymentAmount,
+                                DepositAmount = amount
+                            });
+                            continue;
+                        }
+                    }
+                    
+                    paymentPlanEntries.Add(new PaymentPlanEntry
+                    {
+                        Month = i,
+                        InterestPercentage = 0,
+                        InterestAmount = 0,
+                        InterestTax = 0,
+                        PaymentAmount = amount,
+                        DepositAmount = amount
+                    });
+                }
+                var effectiveAnnualInterest = 0; // ToDo: ???? Ефективна годишна лихва
+
+                return new PaymentPlan
+                {
+                    DepositAmount = amount,
+                    Months = months,
+                    EffectiveAnnualInterest = effectiveAnnualInterest,
+                    InterestTotalSum = totalInterestAmount,
+                    InterestTotalTax = totalInterestTax,
+                    GrossPaymentAmount = grossPaymentAmount,
+                    NetPaymentAmount = netPaymentAmount
+                };
+            }
+            else
+            {
+                // ToDo: Cover logic for Variable interest
+            }
+            return null;
         }
     }
 }

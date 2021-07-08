@@ -5,6 +5,6 @@
 
     public class GetFilteredDepositsResponse
     {
-        public IEnumerable<DepositInfo> Deposits { get; set; }
+        public IEnumerable<DepositInfoWithPaymentPlan> Deposits { get; set; }
     }
 }
