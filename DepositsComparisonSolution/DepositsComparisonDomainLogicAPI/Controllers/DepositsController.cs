@@ -153,7 +153,10 @@
             {
                 // ToDo: Cover logic for Variable interest
             }
-            return null;
+            return new PaymentPlan
+            {
+                Entries = new List<PaymentPlanEntry>()
+            };
         }
 
         private decimal CalculateEffectiveAnnualInterest(decimal interest, int months)
