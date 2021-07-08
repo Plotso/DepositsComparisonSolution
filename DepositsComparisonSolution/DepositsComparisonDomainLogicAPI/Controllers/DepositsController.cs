@@ -1,5 +1,6 @@
 ﻿namespace DepositsComparisonDomainLogicAPI.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using DepositsComparison.Data.Public;
@@ -134,7 +135,7 @@
                         DepositAmount = amount
                     });
                 }
-                var effectiveAnnualInterest = 0; // ToDo: ???? Ефективна годишна лихва
+                var effectiveAnnualInterest = CalculateEffectiveAnnualInterest(interestAmount, months); // ToDo: ???? Ефективна годишна лихва
 
                 return new PaymentPlan
                 {
@@ -153,6 +154,16 @@
                 // ToDo: Cover logic for Variable interest
             }
             return null;
+        }
+
+        private decimal CalculateEffectiveAnnualInterest(decimal interest, int months)
+        {
+            var n = months;
+            var i = interest;
+	
+            var bracketsValue = 1 + (i/n);
+            var onPowerOfN = Math.Pow((double)bracketsValue, n);
+           return (decimal)(onPowerOfN - 1);
         }
     }
 }
