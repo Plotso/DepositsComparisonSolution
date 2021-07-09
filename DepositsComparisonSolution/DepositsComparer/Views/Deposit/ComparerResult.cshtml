@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfo>
+﻿@model IEnumerable<DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfoWithPaymentPlan>
 <body>
     <hr><h1 class="section-heading text-uppercase text-center">Депозити</h1>
     <h2 class="section-heading text-uppercase text-center">Намерени оферти</h2><hr />
@@ -16,31 +16,31 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">@item.MinAmount @item.Currency</th>
+                    <th scope="row">@item.Deposit.MinAmount @item.Deposit.Currency</th>
                     <td>
-                        @if (@item.InterestOptions.FirstOrDefault() != null)
+                        @if (@item.Deposit.InterestOptions.FirstOrDefault() != null)
                         {
-                            @item.InterestOptions.FirstOrDefault().Months
+                            @item.Deposit.InterestOptions.FirstOrDefault().Months
                         }
                     </td>
                     <td>
-                        @if (item.InterestOptions.FirstOrDefault() != null)
+                        @if (item.Deposit.InterestOptions.FirstOrDefault() != null)
                         {
-                            @item.InterestOptions.FirstOrDefault().Months
+                            @item.Deposit.InterestOptions.FirstOrDefault().Months
                         }
                     </td>
-                    <td>@item.Bank.Name</td>
+                    <td>@item.Deposit.Bank.Name</td>
                 </tr>
                 <tr>
                     <td class="btn">
-                        <a asp-action="DetailsWithPlan" asp-controller="Deposit" asp-route-Id="@item.Name" class="btn">
+                        <a asp-action="DetailsWithPlan" asp-controller="Deposit" asp-route-Id="@item.Deposit.Name" class="btn">
                             <i class="fas fa-info-circle" style="color: darkorange"></i>Информация
                         </a>
                     </td>
                     <td></td>
                     <td></td>
                     <td>
-                        <a asp-action="PaymentPlan" asp-controller="Deposit" asp-route-Id="@item.Name" class="btn">
+                        <a asp-action="PaymentPlan" asp-controller="Deposit" asp-route-Id="@item.Deposit.Name" class="btn">
                             <i class="fas fa-info-circle" style="color: darkorange"></i>Разплащателен план
                         </a>
                     </td>
