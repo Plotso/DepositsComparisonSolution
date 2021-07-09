@@ -1,7 +1,7 @@
 # DepositsComparisonSolution
 Project for New Bulgarian University built using kind of microservices architecture and MS SQL as a database. The goal of the project is to have the domain logic in a single place that can be used by any other application.
 
-The idea of the project is to provide a solution for listing and comparing bank products. The comparing functionality is limited to Deposits only. **The project is structured into 3 main components:**
+The idea of the project is to provide a solution for listing and comparing bank products. The comparing functionality is limited to Deposits only. Once user searches for deposits (filtered) by amount, months and so on, a payment plan is also generated for each of the results so that the user can check what each deposits offers him in terms of income.  **The project is structured into 3 main components:**
 
 ## DepositsComparisonDomainLogicAPI
 An [API](DepositsComparisonSolution/DepositsComparisonDomainLogicAPI) responsible for all the domain logic. It has 4 main controllers providing endpoints for different functionalities. 

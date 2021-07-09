@@ -48,6 +48,7 @@ namespace DepositsComparisonDomainLogicAPI
             services.AddTransient<IBankService, BankService>();
             services.AddTransient<IDepositsService, DepositsService>();
             services.AddTransient<IInterestService, InterestService>();
+            services.AddTransient<IPaymentPlanGenerator, PaymentPlanGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

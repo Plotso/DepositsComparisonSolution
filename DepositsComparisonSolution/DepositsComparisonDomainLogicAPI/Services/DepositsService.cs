@@ -37,7 +37,7 @@
                     d.MinAmount <= filterDefinition.Amount &&
                     (d.MaxAmount == null || d.MaxAmount >= filterDefinition.Amount) &&
                     d.Currency == filterDefinition.Currency &&
-                    d.InterestOptions.Any(i => i.Type == filterDefinition.InterestType));
+                    d.InterestOptions.Any(i => i.Type == filterDefinition.InterestType && i.Months == filterDefinition.PeriodInMonths));
 
             return entities.Select(e => _mapper.Map<T>(e));
         }
