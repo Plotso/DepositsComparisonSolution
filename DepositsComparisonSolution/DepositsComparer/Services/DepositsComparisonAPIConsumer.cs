@@ -1,11 +1,16 @@
 ﻿namespace DepositsComparer.Services
 {
+    using System.Text.Encodings.Web;
+    using System.Text.Json;
+    using System.Text.Unicode;
     using System.Threading.Tasks;
     using Configuration;
     using DepositsComparison.Data.Public;
     using DepositsComparisonDomainLogic.Contracts;
     using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
     using RestSharp;
+    using JsonSerializer = System.Text.Json.JsonSerializer;
 
     public class DepositsComparisonAPIConsumer : IDepositsComparisonAPIConsumer
     {
@@ -55,7 +60,7 @@
             request.AddJsonBody(requestModel);
             
             var response = await client.ExecuteAsync<GetFilteredDepositsResponse>(request);
-            return response.Data;
+            return JsonConvert.DeserializeObject<GetFilteredDepositsResponse>(response.Content);
         }
     }
 }
