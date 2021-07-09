@@ -46,8 +46,15 @@
             return View(filteredDeposits.Deposits);
         }
 
-        [Route("Deposit/Details/{id}")]
         public async Task<IActionResult> Details(string id)
+        {
+            var getCurrDepositResponse = await _apiConsumer
+                .GetAllDepositsAsync();
+            return View(getCurrDepositResponse.Deposits
+                .FirstOrDefault(x => x.Name == id));
+        }
+
+        public async Task<IActionResult> DetailsWithPlan(string id)
         {
             var getCurrDepositResponse = await _apiConsumer
                 .GetAllDepositsAsync();
@@ -96,6 +103,11 @@
                 .GetAllDepositsAsync();
             return View("All", getAllDepositsResponse.Deposits
                 .OrderBy(x => x.InterestPaymentInfo));
+        }
+
+        public async Task<IActionResult> PaymentPlan(DepositInfo depositInfo)
+        {
+            return View(depositInfo);
         }
     }
 }

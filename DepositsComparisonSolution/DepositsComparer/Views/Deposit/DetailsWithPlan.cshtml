@@ -1,0 +1,69 @@
+﻿@model DepositsComparisonDomainLogic.Contracts.Models.Deposits.DepositInfo
+<body class="vw-100 vh-100 overflow-auto">
+    <h1>
+        Детайли за депозита
+    </h1><hr />
+    <div class="center-custom">
+        <a asp-controller="Deposit" asp-action="PaymentPlan" asp-route-Id="@Model">Разплащателен план</a>
+    </div>
+    <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col">Тип на депозита</th>
+                <td>Срочен депозит</td>
+            </tr>
+            <tr>
+                <th scope="col">Вид лихва</th>
+                <td>
+                    @if (@Model.InterestOptions.FirstOrDefault() != null)
+                    {
+                        @Model.InterestOptions.FirstOrDefault().Type
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Договорена лихва</th>
+                <td>@Model.InterestDetails</td>
+            </tr>
+            <tr>
+                <th scope="row">Изплащане на лихви</th>
+                <td>@Model.InterestPaymentInfo</td>
+            </tr>
+            <tr>
+                <th scope="row">Ежеседмично олихвяване</th>
+                <td>Да</td>
+            </tr>
+            <tr>
+                <th scope="row">Минимална сума(лв)</th>
+                <td>@Model.MinAmount</td>
+            </tr>
+            <tr>
+                <th scope="row">Период(месеци)</th>
+                <td>
+                    @if (@Model.InterestOptions.FirstOrDefault() != null)
+                    {
+                        @Model.InterestOptions.FirstOrDefault().Months
+                    }
+
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Процент</th>
+                <td>
+                    @if (@Model.InterestOptions.FirstOrDefault() != null)
+                    {
+                        @Model.InterestOptions.FirstOrDefault().Percentage
+                    }
+                    %
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</body>
