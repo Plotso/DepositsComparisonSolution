@@ -106,7 +106,7 @@
                     });
                 }
                 
-                var effectiveAnnualInterest = CalculateEffectiveAnnualInterest(interestAmount, months);
+                var effectiveAnnualInterest = CalculateEffectiveAnnualInterest(relevantInterest.Percentage, months);
 
                 return new PaymentPlan
                 {
