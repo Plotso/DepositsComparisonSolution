@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparison.Data.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparison.Data.Public", "DepositsComparison.Data.Public\DepositsComparison.Data.Public.csproj", "{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepositsComparisonDomainLogicAPI.UnitTests", "tests\DepositsComparisonDomainLogicAPI.UnitTests\DepositsComparisonDomainLogicAPI.UnitTests.csproj", "{DF87A75F-8EDC-4EFE-B194-2370E015548B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,5 +67,9 @@ Global
 		{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBE25100-1AA2-4813-91C7-F878FD4FFFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF87A75F-8EDC-4EFE-B194-2370E015548B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF87A75F-8EDC-4EFE-B194-2370E015548B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF87A75F-8EDC-4EFE-B194-2370E015548B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF87A75F-8EDC-4EFE-B194-2370E015548B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

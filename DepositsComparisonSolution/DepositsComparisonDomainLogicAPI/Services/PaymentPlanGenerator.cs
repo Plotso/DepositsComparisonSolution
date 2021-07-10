@@ -36,7 +36,7 @@
                 {
                     if (months >= 12)
                     {
-                        if (months % 12 == 0)
+                        if (i % 12 == 0)
                         {
                             if (relevantInterest.Type == InterestType.Fixed)
                             {
