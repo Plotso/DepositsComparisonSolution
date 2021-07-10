@@ -27,6 +27,8 @@ namespace DepositsComparer
             services.Configure<APIConsumerSettings>(Configuration.GetSection(nameof(APIConsumerSettings)));
             
             services.AddSingleton<IDepositsComparisonAPIConsumer, DepositsComparisonAPIConsumer>();
+
+            services.AddSingleton<IFilteredDepositCollection ,FilteredDepositCollection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
