@@ -36,7 +36,7 @@
                 {
                     if (months >= 12)
                     {
-                        if (months % 12 == 0)
+                        if (i % 12 == 0)
                         {
                             if (relevantInterest.Type == InterestType.Fixed)
                             {
@@ -106,7 +106,7 @@
                     });
                 }
                 
-                var effectiveAnnualInterest = CalculateEffectiveAnnualInterest(interestAmount, months);
+                var effectiveAnnualInterest = CalculateEffectiveAnnualInterest(relevantInterest.Percentage, months);
 
                 return new PaymentPlan
                 {

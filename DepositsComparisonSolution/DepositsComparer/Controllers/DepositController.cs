@@ -14,12 +14,16 @@
         private readonly ILogger<DepositController> _logger;
         private readonly IDepositsComparisonAPIConsumer _apiConsumer;
 
+        private readonly IFilteredDepositCollection _filteredDepositCollection;
+
         public DepositController(ILogger<DepositController> logger
                                  ,IDepositsComparisonAPIConsumer apiConsumer
+                                 ,IFilteredDepositCollection filteredDeposit
             )
         {
             _logger = logger;
             _apiConsumer = apiConsumer;
+            _filteredDepositCollection = filteredDeposit;
         }
 
 
@@ -43,16 +47,28 @@
         public async Task<IActionResult> ComparerResult(GetFilteredDepositsRequest filter)
         {
             var filteredDeposits = await _apiConsumer.GetFilteredDepositsAsync(filter.Amount, filter.Currency, filter.InterestType, filter.PeriodInMonths);
-            return View(filteredDeposits.Deposits);
+            _filteredDepositCollection.SetDeposits(filteredDeposits.Deposits);
+            var deposit = filteredDeposits.Deposits.Select(x => x.Deposit);
+            var paymentPlans = filteredDeposits.Deposits.Select(x => x.PaymentPlan);
+            return View((IEnumerable<DepositInfoWithPaymentPlan>)_filteredDepositCollection.GetAll());
         }
 
-        [Route("Deposit/Details/{id}")]
         public async Task<IActionResult> Details(string id)
         {
             var getCurrDepositResponse = await _apiConsumer
                 .GetAllDepositsAsync();
             return View(getCurrDepositResponse.Deposits
                 .FirstOrDefault(x => x.Name == id));
+        }
+
+        public IActionResult DetailsWithPlan(string id)
+        {
+            var depositsInfoPaymentPlan = _filteredDepositCollection.GetByDepositName(id);
+            if (depositsInfoPaymentPlan == null)
+            {
+                return Redirect("Home/PageNotFound");
+            }
+            return View(depositsInfoPaymentPlan);
         }
 
         public IActionResult Currency(string id)
@@ -96,6 +112,18 @@
                 .GetAllDepositsAsync();
             return View("All", getAllDepositsResponse.Deposits
                 .OrderBy(x => x.InterestPaymentInfo));
+        }
+
+        public IActionResult PaymentPlan(string id)
+        {
+            foreach (var item in _filteredDepositCollection.GetAll())
+            {
+                if (item.Deposit.Name == id)
+                {
+                    return View(item.PaymentPlan);
+                }
+            }
+            return Redirect("Home/PageNotFound");
         }
     }
 }

@@ -1,0 +1,77 @@
+﻿@model DepositsComparisonDomainLogic.Contracts.Models.Deposits.PaymentPlan
+@using DepositsComparisonDomainLogic.Contracts.Models.Deposits
+<body class="vw-100 vh-100 overflow-auto">
+    <h1 class="text-center">
+        Разплащателен план
+    </h1><hr />
+    <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col" class="center-custom">Доходност на избрания депозит</th>
+            </tr>
+            <tr>
+                <th scope="col">Депозитна сума</th>
+                <td>@Model.DepositAmount.ToString("0.00")</td>
+            </tr>
+            <tr>
+                <th scope="col">Ефективна Годишна лихва</th>
+                <td>@Model.EffectiveAnnualInterest.ToString("0.000")%</td>
+            </tr>
+            <tr>
+                <th scope="col">Месеци</th>
+                <td>@Model.Months</td>
+            </tr>
+            <tr>
+                <th scope="col">Общо изплатени</th>
+                <td>@Model.GrossPaymentAmount.ToString("0.00")</td>
+            </tr>
+            <tr>
+                <th scope="row">Сума на лихвата</th>
+                <td>@Model.InterestTotalSum</td>
+            </tr>
+            <tr>
+                <th scope="row">Данък върху лихвата</th>
+                <td>@Model.InterestTotalTax</td>
+            </tr>
+            <tr>
+                <th scope="row">Нетно изплатени</th>
+                <td>@Model.NetPaymentAmount.ToString("0.00")</td>
+            </tr>
+        </tbody>
+    </table>
+    @if (Model.Entries != null)
+    {
+        <table class="table overflow" style="border: 1px solid; overflow-x:auto; background-color:white">
+            <thead class="thead-dark">
+                <tr>
+                    <th>№</th>
+                    <th>Сума</th>
+                    <th>Вноска лихва</th>
+                    <th>Данък в-у лихвата</th>
+                    <th>Нетно изпл.</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int counter = 1;
+                }
+                @foreach (PaymentPlanEntry item in Model.Entries)
+                {
+                    <tr>
+                        <th scope="row">@(counter++)</th>
+                        <td>@item.DepositAmount</td>
+                        <td>@item.InterestAmount</td>
+                        <td>@item.InterestTax</td>
+                        <td>@item.PaymentAmount.ToString("0.00")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</body>

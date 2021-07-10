@@ -29,7 +29,7 @@
                     <input asp-for="PeriodInMonths" class="form-control" />
                     <span asp-validation-for="PeriodInMonths" class="text-danger"></span>
                 </div>
-                <input type="submit" class="btn btn-primary" asp-area="" asp-controller="Deposit" asp-action="ComparerResult" />
+                <input type="submit" class="btn btn-primary" asp-area="" asp-controller="Deposit" asp-action="ComparerResult" asp-route-Id="@Model" />
                 <br />
             </form>
         </div>
